@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
+import SOCIAL from "../constants/social";
 
 import { rhythm, scale } from "../utils/typography"
 
@@ -11,7 +12,7 @@ const Layout = ({ location, title, children }) => {
     header = (
       <h1
         style={{
-          ...scale(1.5),
+          ...scale(1.1),
           marginBottom: rhythm(1.5),
           marginTop: 0,
         }}
@@ -61,9 +62,20 @@ const Layout = ({ location, title, children }) => {
       <header>{header}</header>
       <main>{children}</main>
       <footer>
-        © {new Date().getFullYear()}, Built with
-        {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a>
+        © {new Date().getFullYear()} Julian David
+
+        <div>
+          {
+            SOCIAL.map((s, index, array) => (
+              <div style={{display: "inline"}} key={s.kind}>
+                <a className="u-no-box-shadow" href={s.url}>
+                  {s.kind}
+                </a>
+                { (index + 1 < array.length) ? <span> / </span> : '' }
+              </div>
+            ))
+          }
+        </div>
       </footer>
     </div>
   )

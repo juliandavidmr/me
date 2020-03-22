@@ -3,7 +3,7 @@ title: SVG y Sombras
 description: Añade sombras a elementos SVG usando filtros CSS/HTML.
 date: '2018-11-25T14:59:52.528Z'
 categories: []
-keywords: []
+keywords: [svg]
 slug: /@anlijudavid/svg-y-sombras-f8cdcde1601c
 ---
 
