@@ -18,7 +18,7 @@ const Bio = ({ short = false }) => {
     query BioQuery {
       avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
         childImageSharp {
-          fixed(width: 50, height: 50) {
+          fixed(width: 150, height: 150) {
             ...GatsbyImageSharpFixed
           }
         }
@@ -29,73 +29,56 @@ const Bio = ({ short = false }) => {
             name
             summary
           }
-          social {
-            twitter
-          }
         }
       }
     }
   `)
 
-  const { author, social } = data.site.siteMetadata
+  const { author } = data.site.siteMetadata
 
   return (
     <div
       style={{
-        display: `flex`,
         marginBottom: rhythm(2.5),
       }}
-      className="main-bio-container"
     >
-      <div className="main-bio">
-        <h1 className="heroine" style={{ marginBottom: rhythm(1 / 5), fontSize: short ? '1rem' : undefined }}>
-          <Image
-            fixed={data.avatar.childImageSharp.fixed}
-            alt={author.name}
-            style={{
-              marginRight: rhythm(1 / 2),
-              marginBottom: 0,
-              minWidth: 50,
-              borderRadius: `100%`,
-            }}
-            imgStyle={{
-              borderRadius: `50%`,
-            }}
-          />
-          Hello! Julian is a software engineer {' '}
-          <span role="img" aria-label="sparkles">
-            ✨
-          </span>
-        </h1>
-        {short ? '' :
-          <div>
-            <ul
-              className="horizontal-links"
-              style={{ marginBottom: rhythm(1) }}
-            >
-              {SOCIAL.map(s => (
-                <li key={s.kind}>
-                  <a className="u-no-box-shadow" href={s.url}>
-                    <FontAwesomeIcon
-                      icon={s.icon}
-                      color="var(--gray)"
-                      title={`Link to my ${s.kind}`}
-                    />
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <p>
-              Hi there! I&apos;m a polyglot System Engineer. I work at Bizagi Latam.
-              <span role="img" aria-label="woman surfing">
-                🏄🏻‍♀️
-              </span>{' '}
-              I&apos;m started my career in technology as a Full Stack developer
-              and now work as a Front End Software Engineer developer.
-              I write about JavaScript, TypeScript, Web Assembly and more. Welcome!
-            </p>
+      <div className="hero-body">
+        <div className="container">
+          <div itemtype="http://schema.org/Person">
+            <Image
+              fixed={data.avatar.childImageSharp.fixed}
+              alt={author.name}
+              style={{
+                marginBottom: 0,
+                minWidth: 120,
+                minHeight: 120
+              }}
+              imgStyle={{
+                borderRadius: `50%`,
+              }}
+            />
+            <h1 className="title" itemprop="name">{author.name}</h1>
+            <h2 className="subtitle" itemprop="description">{author.summary}</h2>
+            <p>I make modules and apps. Mostly Typescript &amp; Node.js.</p>
           </div>
-        }
+          <br />
+          <p className="social-list">
+            {SOCIAL.map((s) => (
+              s.principal ?
+                <div key={s.kind} className="social-item">
+                  <FontAwesomeIcon
+                    icon={s.icon}
+                    color="var(--gray)"
+                    title={`Link to my ${s.kind}`}
+                  />
+                  <a href={s.url}>
+                    <span>{s.text}</span>
+                  </a>
+                </div>
+                : ''
+            ))}
+          </p>
+        </div>
       </div>
     </div>
   )

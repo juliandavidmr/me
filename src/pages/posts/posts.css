@@ -1,0 +1,57 @@
+body {
+    background: rgba(255, 255, 255, 1);
+    background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 47%, rgba(254, 254, 254, 1) 68%, rgba(253, 253, 253, 0.97) 90%, rgba(252, 252, 252, 0.97) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(255, 255, 255, 1)), color-stop(68%, rgba(254, 254, 254, 1)), color-stop(90%, rgba(253, 253, 253, 0.97)), color-stop(100%, rgba(252, 252, 252, 0.97)));
+    background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 47%, rgba(254, 254, 254, 1) 68%, rgba(253, 253, 253, 0.97) 90%, rgba(252, 252, 252, 0.97) 100%);
+    background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 47%, rgba(254, 254, 254, 1) 68%, rgba(253, 253, 253, 0.97) 90%, rgba(252, 252, 252, 0.97) 100%);
+    background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 47%, rgba(254, 254, 254, 1) 68%, rgba(253, 253, 253, 0.97) 90%, rgba(252, 252, 252, 0.97) 100%);
+    background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 47%, rgba(254, 254, 254, 1) 68%, rgba(253, 253, 253, 0.97) 90%, rgba(252, 252, 252, 0.97) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#fcfcfc', GradientType=1);
+}
+
+.article-container {
+    display: flex;
+    flex-flow: wrap;
+    /* Shorthand – you could use ‘flex-direction: column’ and ‘flex-wrap: wrap’ instead */
+    justify-content: flex-start;
+    align-items: normal;
+    margin-bottom: 4rem;
+}
+
+.article-container > h2 {
+    flex: 100%;
+    margin: .7rem;
+}
+
+.article-container>article {
+    flex: auto;
+    display: inline-block;
+    border-radius: 15px;
+    transition: all .4s cubic-bezier(0.175, 0.885, 0, 1);
+    background-color: #fff;
+    min-width: 250px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);
+    padding: 1.2rem;
+    vertical-align: top;
+    width: 270px;
+    margin: .7rem;
+    border: 1px solid var(--purple-light);
+}
+
+.article-container>article:hover {
+    box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);
+    transform: scale(1.10, 1.10);
+}
+
+header {}
+
+h3>a {
+    color: var(--purple-dark);
+}
+
+small {
+    color: var(--gray);
+}

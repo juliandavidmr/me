@@ -4,13 +4,40 @@ module.exports = {
     title: `My Gatsby Blog`,
     author: {
       name: `Julian David`,
-      summary: `who lives and works in Bogotá (Colombia) building useful things.`,
+      summary: `Hi there! I'm a polyglot System Engineer.`,
     },
     description: `My personal blog built with Gatsby.`,
     siteUrl: `https://juliandavidmr.github.io/`,
     social: {
       twitter: `anlijudavid`,
     },
+    projects: [
+      {
+        title: 'awesome-nestjs',
+        link: 'https://github.com/juliandavidmr/awesome-nestjs',
+        description: '😏 Curated list of NestJS'
+      }, {
+        title: 'sails-inverse-model',
+        link: 'https://github.com/juliandavidmr/sails-inverse-model',
+        description: 'Generate views, models and controllers for SailsJS from MySQL, PostgreSQL and MongoDB'
+      }, {
+        title: 'vue-frame',
+        link: 'https://github.com/juliandavidmr/vue-frame',
+        description: 'Dynamic component for creation of interfaces with iframes'
+      }, {
+        title: 'me',
+        link: 'https://github.com/juliandavidmr/me',
+        description: 'This blog'
+      }, {
+        title: 'sylver',
+        link: 'https://github.com/juliandavidmr/sylver',
+        description: '❄️A lightweight math library for JavaScript'
+      }, {
+        title: 'StarkMap API',
+        link: 'https://github.com/juliandavidmr/StarkMap_API',
+        description: 'Visualizacion de recursos fisicos de la universidad de la Amazonia'
+      }
+    ]
   },
   plugins: [
     {

@@ -7,11 +7,6 @@ Wordpress2016.overrideThemeStyles = () => {
   return {
     "a.gatsby-resp-image-link": {
       boxShadow: `none`,
-    },
-    "footer": {
-      fontSize: '0.8rem',
-      display: "flex",
-      "justify-content": "space-between"
     }
   }
 }
