@@ -13,6 +13,10 @@ module.exports = {
     },
     projects: [
       {
+        title: 'COVID-19 Coronavirus Statistics',
+        link: '/coronavirus'
+      },
+      {
         title: 'awesome-nestjs',
         link: 'https://github.com/juliandavidmr/awesome-nestjs',
         description: '😏 Curated list of NestJS'

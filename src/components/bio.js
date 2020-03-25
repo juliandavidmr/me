@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { rhythm } from "../utils/typography"
 
-const Bio = ({ short = false }) => {
+const Bio = () => {
   const data = useStaticQuery(graphql`
     query BioQuery {
       avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
@@ -63,20 +63,22 @@ const Bio = ({ short = false }) => {
           </div>
           <br />
           <p className="social-list">
-            {SOCIAL.map((s) => (
-              s.principal ?
-                <div key={s.kind} className="social-item">
-                  <FontAwesomeIcon
-                    icon={s.icon}
-                    color="var(--gray)"
-                    title={`Link to my ${s.kind}`}
-                  />
-                  <a href={s.url}>
-                    <span>{s.text}</span>
-                  </a>
-                </div>
-                : ''
-            ))}
+            {
+              SOCIAL.map((s) => (
+                s.principal ?
+                  <div key={s.kind} className="social-item">
+                    <FontAwesomeIcon
+                      icon={s.icon}
+                      color="var(--gray)"
+                      title={`Link to my ${s.kind}`}
+                    />
+                    <a href={s.url}>
+                      <span>{s.text}</span>
+                    </a>
+                  </div>
+                  : ''
+              ))
+            }
           </p>
         </div>
       </div>

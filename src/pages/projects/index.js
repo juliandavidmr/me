@@ -35,7 +35,7 @@ const ProjectsPage = ({ location }) => {
                         return (
                             <div key={project.title}>
                                 <h3>
-                                    <a href={project.link} target="_blank">
+                                    <a href={project.link} target="_blank" rel="noopener noreferrer">
                                         {project.title}
                                     </a>
                                 </h3>
