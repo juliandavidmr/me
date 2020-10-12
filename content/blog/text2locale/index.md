@@ -1,7 +1,7 @@
 ---
 title: Text2locale
-date: "2020-09-12"
-description: Una herramienta para extraccion
+date: "2020-10-12"
+description: Extract all the texts of any project with HTML files and generate a KV (Key-Value) file.
 ---
 
 Extract all the texts of any project with HTML files and generate a KV (Key-Value) file,
