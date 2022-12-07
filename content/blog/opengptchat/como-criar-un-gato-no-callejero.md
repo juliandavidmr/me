@@ -1,8 +1,8 @@
 ---
 title: Como criar un gato para que no sea loco y callejero 
 date: "2022-12-06"
-description: La mejor manera de criar un gato para que no sea loco y callejero es darle un buen comienzo en la vida. Esto incluye cosas como proporcionarle un ambiente seguro y estable, brindarle amor y atención adecuados, y asegurarse de que reciba una nutrición adecuada y un cuidado médico regular.
-keywords: [gatos, crianza, casa, callejero, opengpt]
+description: "La mejor manera de criar un gato para que no sea loco y callejero es darle un buen comienzo en la vida. Esto incluye cosas como proporcionarle un ambiente seguro y estable, brindarle amor y atención adecuados, y asegurarse de que reciba una nutrición adecuada y un cuidado médico regular."
+keywords: ["gatos", "crianza", "casa", "callejero", "opengpt"]
 ---
 
 La mejor manera de criar un gato para que no sea loco y callejero es darle un buen comienzo en la vida. Esto incluye cosas como proporcionarle un ambiente seguro y estable, brindarle amor y atención adecuados, y asegurarse de que reciba una nutrición adecuada y un cuidado médico regular.
