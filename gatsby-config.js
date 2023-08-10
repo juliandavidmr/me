@@ -1,10 +1,10 @@
 module.exports = {
   pathPrefix: "/me",
   siteMetadata: {
-    title: `My Gatsby Blog`,
+    title: `My Personal Blog`,
     author: {
       name: `Julian David`,
-      summary: `Hi there! I'm a polyglot System Engineer.`,
+      summary: `Hi there! I'm a polyglot Web Developer.`,
     },
     description: `My personal blog built with Gatsby.`,
     siteUrl: `https://juliandavidmr.github.io/`,
