@@ -59,7 +59,7 @@
     "wrangler": "^4.99.0"
   },
   "volta": {
-    "node": "20.18.3"
+    "node": "22.14.0"
   },
   "overrides": {
     "astro-boilerplate-components": {
