@@ -1,11 +1,12 @@
 ---
 import Base from '@/templates/Base.astro';
+import { cn } from '@/utils/cn';
 
 interface Props {
   eyebrow: string;
   title: string;
   description: string;
-  items: { date: string; title: string; meta: string }[];
+  items: { date: string; title: string; meta: string; href?: string }[];
 }
 
 const { eyebrow, title, description, items } = Astro.props as Props;
@@ -17,16 +18,13 @@ const navLink =
 
 <Base head={{ title: `${title} — Julian David`, description }}>
   <header
-    class:list={[
-      frame,
-      'flex h-26.25 items-center justify-between max-sm:h-19.5',
-    ]}
+    class={cn(frame, 'flex h-24 items-center justify-between max-sm:h-20')}
   >
-    <a class="text-[1.0625rem] font-medium tracking-[-.04em] no-underline" href="/"
-      ><b class="font-medium text-[#ff5a1f]">/</b> jd</a
-    >
+    <a class="text-base font-medium tracking-[-.04em] no-underline" href="/">
+      <b class="font-medium text-[#ff5a1f]">/</b> jd
+    </a>
     <nav
-      class="flex items-center gap-[3.375rem] max-[56.25rem]:gap-[1.375rem] max-sm:gap-[.8125rem]"
+      class="flex items-center gap-14 max-[56.25rem]:gap-6 max-sm:gap-3"
       aria-label="Primary navigation"
     >
       <a class={navLink} href="/posts/">Writing</a><a
@@ -38,34 +36,30 @@ const navLink =
       >
     </nav>
   </header>
-  <main
-    class:list={[frame, 'min-h-[calc(100vh-6.5625rem)] py-[5.9375rem] max-sm:pt-[4.0625rem]']}
-  >
+  <main class={cn(frame, 'min-h-[calc(100vh-6rem)] py-24 max-sm:pt-16')}>
     <p class="text-[.625rem] font-semibold uppercase tracking-[.2em]">
       {eyebrow}
       <b class="text-[#ff5a1f]">/</b>
     </p>
     <h1
-      class="my-[2.1875rem] mb-5 max-w-[48.75rem] text-[clamp(3.625rem,7vw,6.375rem)] font-medium leading-[.96] tracking-[-.075em]"
+      class="my-8 mb-5 max-w-3xl text-[clamp(3.625rem,7vw,6.375rem)] font-medium leading-[.96] tracking-[-.075em]"
     >
       <span>{title}</span><i class="not-italic text-[#ff5a1f]">.</i>
     </h1>
-    <p
-      class="mb-20 max-w-[31.25rem] text-[.8125rem] text-[#6f6a64] dark:text-[#9a948c]"
-    >
+    <p class="mb-20 max-w-lg text-xs text-[#6f6a64] dark:text-[#9a948c]">
       {description}
     </p>
     <div class="border-t border-[#dedbd2] dark:border-[#2a2926]">
       {
         items.map((item) => (
           <a
-            class="group grid min-h-[4.375rem] grid-cols-[8.125rem_1fr_12.5rem_1.25rem] items-center border-b border-[#dedbd2] no-underline transition-colors hover:bg-[#ff5a1f]/[.025] dark:border-[#2a2926] max-sm:grid-cols-[1fr_1.25rem] max-sm:gap-2 max-sm:py-[1.125rem]"
-            href="/"
+            class="group grid min-h-20 grid-cols-[8.125rem_1fr_12.5rem_1.25rem] items-center border-b border-[#dedbd2] no-underline transition-colors hover:bg-[#ff5a1f]/[.025] dark:border-[#2a2926] max-sm:grid-cols-[1fr_1.25rem] max-sm:gap-2 max-sm:py-4"
+            href={item.href || '/'}
           >
             <time class="text-[.5625rem] uppercase tracking-[.08em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:text-[#9a948c]">
               {item.date}
             </time>
-            <strong class="text-[1.0625rem] font-medium transition-transform group-hover:translate-x-1 max-sm:col-start-1 max-sm:text-base">
+            <strong class="text-base font-medium transition-transform group-hover:translate-x-1 max-sm:col-start-1 max-sm:text-base">
               {item.title}
             </strong>
             <span class="text-[.5625rem] uppercase tracking-[.08em] text-[#6f6a64] dark:text-[#9a948c] max-sm:col-start-1">
@@ -79,7 +73,7 @@ const navLink =
       }
     </div>
     <a
-      class="mt-[2.8125rem] inline-block text-[.5625rem] uppercase tracking-[.12em] text-[#6f6a64] no-underline dark:text-[#9a948c]"
+      class="mt-12 inline-block text-[.5625rem] uppercase tracking-[.12em] text-[#6f6a64] no-underline dark:text-[#9a948c]"
       href="/">← Return to journal</a
     >
   </main>

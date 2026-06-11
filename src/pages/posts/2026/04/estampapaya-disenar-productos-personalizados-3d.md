@@ -5,7 +5,7 @@ pubDate: "2026-04-07T10:00:00.000-05:00"
 updatedDate: "2026-06-10T23:00:00.000-05:00"
 author: "Julian David"
 tags: ["startup","3d","impresión","marketplace","astro"]
-images: []
+images: ["/assets/journal/estampapaya.png"]
 ---
 
 # EstampaPaya
@@ -86,7 +86,9 @@ También invertiría antes en:
 
 ## Estado actual
 
-Aunque el proyecto sigue disponible públicamente, para mí representa algo más importante que una plataforma de estampado.
+EstampaPaya está listo para usar en [estampapaya.com](https://www.estampapaya.com/). Allí puedes explorar la plataforma, personalizar productos en 3D y solicitar cotizaciones.
+
+Para mí, el proyecto también representa algo más importante que una plataforma de estampado.
 
 Fue una oportunidad para explorar visualización 3D, experiencia de usuario, marketplaces y validación de producto en un contexto real.
 

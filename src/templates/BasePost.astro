@@ -6,6 +6,7 @@ import type {
 
 import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
+import { cn } from '@/utils/cn';
 import { sortByDate } from '@/utils/Posts';
 
 interface ArticleFrontmatter extends IFrontmatter {
@@ -64,8 +65,8 @@ const heroWidths = {
   bleed: 'w-[calc(100%-3rem)] max-sm:w-full',
   screen: 'w-full [&_img]:h-[calc(100vh-5.5rem)] [&_img]:max-h-none',
 };
-const prose = [
-  'prose prose-neutral dark:prose-invert mx-auto w-[min(40rem,calc(100%-3rem))] max-w-none text-[1.1875rem] leading-[1.82] tracking-[-.012em] max-sm:w-[calc(100%-2.25rem)] max-sm:text-[1.0625rem] max-sm:leading-[1.8]',
+const prose = cn(
+  'prose prose-neutral dark:prose-invert mx-auto w-[min(40rem,calc(100%-3rem))] max-w-none text-[1.1875rem] leading-[1.82] tracking-[-.012em] max-sm:w-[calc(100%-2.25rem)] max-sm:text-base max-sm:leading-[1.8]',
   '[&_p]:mb-[1.6em] [&_p]:mt-0 [&_p]:!font-sans [&_p]:!text-inherit [&_p]:!text-[inherit] [&_p]:!leading-[inherit]',
   '[&_div]:!font-sans [&_div]:!text-inherit [&_span]:!font-sans [&_span]:!text-inherit [&_a]:!font-sans [&_a]:!text-inherit [&_a]:underline [&_a]:decoration-[#ff5a1f]/60 [&_a]:underline-offset-[.18em] hover:[&_a]:!text-[#ff5a1f]',
   '[&_h1]:mt-[2.2em] [&_h1]:mb-[.65em] [&_h1]:scroll-mt-[4.375rem] [&_h1]:font-sans [&_h1]:text-[3.625rem] [&_h1]:font-medium [&_h1]:leading-none [&_h1]:tracking-[-.055em] max-sm:[&_h1]:text-[2.625rem]',
@@ -77,40 +78,39 @@ const prose = [
   '[&_hr]:mx-auto [&_hr]:my-[5.3125rem] [&_hr]:h-[0.0625rem] [&_hr]:w-[2.375rem] [&_hr]:border-0 [&_hr]:bg-[#ff5a1f]',
   '[&_blockquote]:relative [&_blockquote]:left-1/2 [&_blockquote]:my-[2.5em] [&_blockquote]:mb-[2.7em] [&_blockquote]:w-[min(48.75rem,calc(100vw-3rem))] [&_blockquote]:-translate-x-1/2 [&_blockquote]:border-l [&_blockquote]:border-[#ff5a1f] [&_blockquote]:py-3 [&_blockquote]:pl-[2.125rem] [&_blockquote]:font-sans [&_blockquote]:text-[clamp(1.75rem,3.3vw,2.75rem)] [&_blockquote]:font-medium [&_blockquote]:not-italic [&_blockquote]:leading-[1.2] [&_blockquote]:tracking-[-.055em] max-sm:[&_blockquote]:w-[calc(100vw-2.25rem)] max-sm:[&_blockquote]:pl-5 max-sm:[&_blockquote]:text-[1.6875rem]',
   '[&_img]:h-auto [&_img]:max-w-full [&_video]:h-auto [&_video]:max-w-full [&_svg]:h-auto [&_svg]:max-w-full [&_.separator]:my-[3.4375rem] [&_.separator]:text-center [&_.separator_a]:!m-0 [&_.separator_a]:block [&_.separator_img]:!h-auto [&_.separator_img]:!w-auto [&_.separator_img]:max-w-full',
-  '[&_pre]:relative [&_pre]:left-1/2 [&_pre]:my-[2.375rem] [&_pre]:w-[min(57.5rem,calc(100vw-3rem))] [&_pre]:max-w-none [&_pre]:-translate-x-1/2 [&_pre]:overflow-x-auto [&_pre]:border [&_pre]:border-[#dedbd2] [&_pre]:bg-white/70 [&_pre]:px-6 [&_pre]:py-[1.375rem] [&_pre]:text-[.8125rem] [&_pre]:leading-[1.65] [&_pre]:shadow-none dark:[&_pre]:border-[#2a2926] dark:[&_pre]:bg-[#111]/70 max-sm:[&_pre]:w-[calc(100vw-1.125rem)]',
+  '[&_pre]:relative [&_pre]:left-1/2 [&_pre]:my-[2.375rem] [&_pre]:w-[min(57.5rem,calc(100vw-3rem))] [&_pre]:max-w-none [&_pre]:-translate-x-1/2 [&_pre]:overflow-x-auto [&_pre]:border [&_pre]:border-[#dedbd2] [&_pre]:bg-white/70 [&_pre]:px-6 [&_pre]:py-[1.375rem] [&_pre]:text-xs [&_pre]:leading-[1.65] [&_pre]:shadow-none dark:[&_pre]:border-[#2a2926] dark:[&_pre]:bg-[#111]/70 max-sm:[&_pre]:w-[calc(100vw-1.125rem)]',
   '[&_pre_*]:!bg-transparent [&_pre_*]:!font-mono [&_pre_*]:!text-[inherit] [&_pre_*]:!leading-[inherit] [&_:not(pre)>code]:border [&_:not(pre)>code]:border-[#dedbd2] [&_:not(pre)>code]:bg-white/60 [&_:not(pre)>code]:px-[.35em] [&_:not(pre)>code]:py-[.16em] [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[.78em] dark:[&_:not(pre)>code]:border-[#2a2926] dark:[&_:not(pre)>code]:bg-[#111]/60',
-  '[&_table]:relative [&_table]:left-1/2 [&_table]:my-[2.8125rem] [&_table]:w-[min(57.5rem,calc(100vw-3rem))] [&_table]:max-w-none [&_table]:-translate-x-1/2 [&_table]:border-collapse [&_table]:border [&_table]:border-[#dedbd2] [&_table]:text-[.8125rem] [&_table]:shadow-none dark:[&_table]:border-[#2a2926] max-sm:[&_table]:w-[calc(100vw-1.125rem)] [&_th]:border [&_th]:border-[#dedbd2] [&_th]:bg-white/60 [&_th]:p-3 [&_th]:text-left [&_th]:font-semibold dark:[&_th]:border-[#2a2926] dark:[&_th]:bg-[#111]/60 [&_td]:border [&_td]:border-[#dedbd2] [&_td]:p-3 dark:[&_td]:border-[#2a2926]',
-  '[&_sup]:text-[.65em] [&_sup]:text-[#ff5a1f] [&_.footnotes]:mt-20 [&_.footnotes]:border-t [&_.footnotes]:border-[#dedbd2] [&_.footnotes]:pt-7 [&_.footnotes]:text-[.8125rem] [&_.footnotes]:leading-[1.65] [&_.footnotes]:text-[#6f6a64] dark:[&_.footnotes]:border-[#2a2926] dark:[&_.footnotes]:text-[#9a948c]',
-].join(' ');
+  '[&_table]:relative [&_table]:left-1/2 [&_table]:my-[2.8125rem] [&_table]:w-[min(57.5rem,calc(100vw-3rem))] [&_table]:max-w-none [&_table]:-translate-x-1/2 [&_table]:border-collapse [&_table]:border [&_table]:border-[#dedbd2] [&_table]:text-xs [&_table]:shadow-none dark:[&_table]:border-[#2a2926] max-sm:[&_table]:w-[calc(100vw-1.125rem)] [&_th]:border [&_th]:border-[#dedbd2] [&_th]:bg-white/60 [&_th]:p-3 [&_th]:text-left [&_th]:font-semibold dark:[&_th]:border-[#2a2926] dark:[&_th]:bg-[#111]/60 [&_td]:border [&_td]:border-[#dedbd2] [&_td]:p-3 dark:[&_td]:border-[#2a2926]',
+  '[&_sup]:text-[.65em] [&_sup]:text-[#ff5a1f] [&_.footnotes]:mt-20 [&_.footnotes]:border-t [&_.footnotes]:border-[#dedbd2] [&_.footnotes]:pt-7 [&_.footnotes]:text-xs [&_.footnotes]:leading-[1.65] [&_.footnotes]:text-[#6f6a64] dark:[&_.footnotes]:border-[#2a2926] dark:[&_.footnotes]:text-[#9a948c]',
+);
 ---
 
 <Base head={{ title, description: content.description }}>
   <header
-    class:list={[
-      frame,
-      'flex h-[5.5rem] items-center justify-between max-sm:h-[4.875rem]',
-    ]}
+    class={cn(frame, 'flex h-24 items-center justify-between max-sm:h-20')}
   >
     <a
-      class="text-[1.0625rem] font-medium tracking-[-.04em] no-underline"
+      class="text-base font-medium tracking-[-.04em] no-underline"
       href="/"
       aria-label="Julian David home"
       ><b class="font-medium text-[#ff5a1f]">/</b> jd</a
     >
     <nav
-      class="flex items-center gap-[3.375rem] max-[56.25rem]:gap-[1.375rem] max-sm:gap-3"
+      class="flex items-center gap-14 max-[56.25rem]:gap-6 max-sm:gap-3"
       aria-label="Primary navigation"
     >
-      <a class:list={[navLink, 'after:scale-x-[.45]']} href="/posts/">Writing</a
-      ><a class={navLink} href="/projects/">Projects</a><a
+      <a class={cn(navLink, 'after:scale-x-[.45]')} href="/posts/">Writing</a><a
         class={navLink}
-        href="/notes/">Notes</a
-      ><a class={navLink} href="/about/">About</a>
+        href="/projects/">Projects</a
+      ><a class={navLink} href="/notes/">Notes</a><a
+        class={navLink}
+        href="/about/">About</a
+      >
     </nav>
   </header>
 
   <aside
-    class="fixed left-[max(1.625rem,calc((100vw-72.5rem)/2-3.5rem))] top-[34vh] z-[3] flex h-[14.375rem] w-[1.375rem] flex-col items-center gap-[1.1875rem] text-[.5rem] tracking-[.08em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:text-[#9a948c] max-[56.25rem]:hidden"
+    class="fixed left-[max(1.625rem,calc((100vw-72.5rem)/2-3.5rem))] top-[34vh] z-[3] flex h-[14.375rem] w-6 flex-col items-center gap-5 text-[.5rem] tracking-[.08em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:text-[#9a948c] max-[56.25rem]:hidden"
     aria-label="Reading progress"
   >
     <span>01</span><div
@@ -122,22 +122,22 @@ const prose = [
     </div><span>02</span><span>03</span>
   </aside>
 
-  <main class="overflow-clip py-20 pb-[8.125rem] max-sm:pt-[3.25rem]">
+  <main class="overflow-clip py-20 pb-32 max-sm:pt-12">
     <header
-      class="mx-auto mb-[5.625rem] w-[min(57.5rem,calc(100%-3rem))] max-sm:mb-[3.875rem] max-sm:w-[calc(100%-2.25rem)]"
+      class="mx-auto mb-24 w-[min(57.5rem,calc(100%-3rem))] max-sm:mb-16 max-sm:w-[calc(100%-2.25rem)]"
     >
       <a
         class="mb-12 inline-block text-[.5625rem] font-semibold uppercase tracking-[.18em] text-[#6f6a64] no-underline dark:text-[#9a948c] max-sm:mb-8"
         href="/posts/">Writing <b class="text-[#ff5a1f]">/</b> Journal entry</a
       >
       <h1
-        class="m-0 max-w-[56.25rem] text-[clamp(4.375rem,8.1vw,7.625rem)] font-medium leading-[.92] tracking-[-.075em] text-balance max-sm:text-[clamp(3rem,15vw,4.25rem)] max-sm:leading-[.96]"
+        class="m-0 max-w-4xl text-[clamp(4.375rem,8.1vw,7.625rem)] font-medium leading-[.92] tracking-[-.075em] text-balance max-sm:text-[clamp(3rem,15vw,4.25rem)] max-sm:leading-[.96]"
         transition:name="article-title"
       >
         {articleTitle}<i class="not-italic text-[#ff5a1f]">.</i>
       </h1>
       <div
-        class="mt-12 flex flex-wrap gap-x-[2.125rem] gap-y-[.875rem] border-t border-[#dedbd2] pt-[1.125rem] text-[.5625rem] uppercase tracking-[.1em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:border-[#2a2926] dark:text-[#9a948c] max-sm:mt-[1.875rem] max-sm:grid max-sm:gap-[.4375rem]"
+        class="mt-12 flex flex-wrap gap-x-[2.125rem] gap-y-[.875rem] border-t border-[#dedbd2] pt-[1.125rem] text-[.5625rem] uppercase tracking-[.1em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:border-[#2a2926] dark:text-[#9a948c] max-sm:mt-[1.875rem] max-sm:grid max-sm:gap-2"
       >
         <span>Updated {formatDate(updated)}</span><span>{author}</span><span
           >{content.tags?.join(' · ') || 'Journal'}</span
@@ -148,10 +148,10 @@ const prose = [
     {
       heroImage && (
         <figure
-          class:list={[
-            'mx-auto mb-[6.875rem] max-sm:mb-[4.375rem]',
+          class={cn(
+            'mx-auto mb-28 max-sm:mb-16',
             heroWidths[content.heroLayout || 'wide'],
-          ]}
+          )}
           transition:name="article-hero-image"
         >
           <img
@@ -173,13 +173,13 @@ const prose = [
     </article>
 
     <footer
-      class="mx-auto mt-[7.5rem] w-[min(57.5rem,calc(100%-3rem))] max-sm:mt-[5.3125rem] max-sm:w-[calc(100%-2.25rem)]"
+      class="mx-auto mt-28 w-[min(57.5rem,calc(100%-3rem))] max-sm:mt-20 max-sm:w-[calc(100%-2.25rem)]"
     >
       <div class="relative h-[0.0625rem] bg-[#dedbd2] dark:bg-[#2a2926]">
-        <i class="absolute -top-0.5 left-0 size-[.3125rem] bg-[#ff5a1f]"></i>
+        <i class="absolute -top-0.5 left-0 size-1.5 bg-[#ff5a1f]"></i>
       </div>
       <div
-        class="grid grid-cols-3 gap-[1.875rem] py-[1.875rem] pb-[4.0625rem] text-[.625rem] leading-[1.7] text-[#6f6a64] dark:text-[#9a948c] max-sm:block max-sm:pb-[2.375rem] [&_p]:m-0 max-sm:[&_p]:my-2 [&_strong]:font-medium [&_strong]:text-[#0d0d0d] dark:[&_strong]:text-[#f4f1ea] [&_span]:font-medium [&_span]:text-[#0d0d0d] dark:[&_span]:text-[#f4f1ea]"
+        class="grid grid-cols-3 gap-8 py-[1.875rem] pb-[4.0625rem] text-[.625rem] leading-[1.7] text-[#6f6a64] dark:text-[#9a948c] max-sm:block max-sm:pb-[2.375rem] [&_p]:m-0 max-sm:[&_p]:my-2 [&_strong]:font-medium [&_strong]:text-[#0d0d0d] dark:[&_strong]:text-[#f4f1ea] [&_span]:font-medium [&_span]:text-[#0d0d0d] dark:[&_span]:text-[#f4f1ea]"
       >
         <p>Written by <strong>{author}</strong></p><p>
           Last updated <time
@@ -195,14 +195,14 @@ const prose = [
         {
           olderPost ? (
             <a
-              class="group flex min-h-[8.125rem] flex-col justify-between py-7 no-underline max-sm:min-h-[6.875rem]"
+              class="group flex min-h-32 flex-col justify-between py-7 no-underline max-sm:min-h-28"
               href={publicPostUrl(olderPost)}
             >
               <>
                 <span class="text-[.5rem] uppercase tracking-[.14em] text-[#6f6a64] dark:text-[#9a948c]">
                   Previous article ←
                 </span>
-                <strong class="text-[1.0625rem] font-medium leading-[1.25] tracking-[-.035em] transition-transform group-hover:translate-x-1">
+                <strong class="text-base font-medium leading-[1.25] tracking-[-.035em] transition-transform group-hover:translate-x-1">
                   {olderPost.frontmatter.title.trim()}
                 </strong>
               </>
@@ -214,14 +214,14 @@ const prose = [
         {
           newerPost ? (
             <a
-              class="group flex min-h-[8.125rem] flex-col justify-between border-l border-[#dedbd2] py-7 pl-[2.1875rem] text-right no-underline dark:border-[#2a2926] max-sm:min-h-[6.875rem] max-sm:border-l-0 max-sm:border-t max-sm:pl-0 max-sm:text-left"
+              class="group flex min-h-32 flex-col justify-between border-l border-[#dedbd2] py-7 pl-[2.1875rem] text-right no-underline dark:border-[#2a2926] max-sm:min-h-28 max-sm:border-l-0 max-sm:border-t max-sm:pl-0 max-sm:text-left"
               href={publicPostUrl(newerPost)}
             >
               <>
                 <span class="text-[.5rem] uppercase tracking-[.14em] text-[#6f6a64] dark:text-[#9a948c]">
                   Next article →
                 </span>
-                <strong class="text-[1.0625rem] font-medium leading-[1.25] tracking-[-.035em] transition-transform group-hover:-translate-x-1 max-sm:group-hover:translate-x-1">
+                <strong class="text-base font-medium leading-[1.25] tracking-[-.035em] transition-transform group-hover:-translate-x-1 max-sm:group-hover:translate-x-1">
                   {newerPost.frontmatter.title.trim()}
                 </strong>
               </>
