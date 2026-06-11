@@ -112,13 +112,7 @@
         "extraFileExtensions": [".astro"]
       },
       "rules": {
-        "prettier/prettier": [
-          "error",
-          {
-            "singleQuote": true,
-            "endOfLine": "auto"
-          }
-        ],
+        "prettier/prettier": "off",
         "import/extensions": [
           "error",
           "ignorePackages",

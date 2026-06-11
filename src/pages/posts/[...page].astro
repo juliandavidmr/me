@@ -1,8 +1,5 @@
 ---
-import type {
-  FrontmatterPage,
-  IFrontmatter,
-} from 'astro-boilerplate-components';
+import type { FrontmatterPage } from 'astro-boilerplate-components';
 import {
   BlogGallery,
   NewerOlderPagination,
@@ -20,7 +17,7 @@ type GetStaticPaths = {
 }; // Overrides `GetStaticPathsOptions` types from Astro
 
 export async function getStaticPaths({ paginate }: GetStaticPaths) {
-  const allPosts = await Astro.glob<IFrontmatter>('./*.md');
+  const allPosts = Object.values(import.meta.glob('./*.md', { eager: true }));
   const sortedPosts = sortByDate(allPosts);
 
   // Return a paginated collection of paths for all posts
