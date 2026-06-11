@@ -1,25 +1,95 @@
 ---
-import { CTA } from '@/partials/CTA';
-import { Hero } from '@/partials/Hero';
-import { ProjectList } from '@/partials/ProjectList';
-import { RecentPosts } from '@/partials/RecentPosts';
-import { Sponsors } from '@/partials/Sponsors';
 import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
 import { sortByDate } from '@/utils/Posts';
 
-const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
-const sortedPosts = sortByDate(allPosts);
-const lastThreePosts = sortedPosts.slice(0, 3);
-
-const { title } = AppConfig;
-const { description } = AppConfig;
+const allPosts = Object.values(import.meta.glob('./posts/**/*.md', { eager: true }));
+const lastThreePosts = sortByDate(allPosts).slice(0, 3);
+const { title, description } = AppConfig;
+const formatDate = (date: string | Date) => new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(date)).replaceAll('-', '.');
+const publicPostUrl = (url: string) => url.replace(/^\/posts/, '');
+const notes = [
+  ['2026.06.09', 'Notes on cognitive load and decision making', '⌁'],
+  ['2026.06.07', 'English learning log', '↕'],
+  ['2026.06.06', 'Agent orchestration patterns', '⊕'],
+  ['2026.06.04', 'Reading: The Pragmatic Programmer', '⋮'],
+  ['2026.06.03', 'Ideas for Inmune', '⌜'],
+];
+const frame = 'ml-[max(8.4375rem,calc((100%-72.5rem)/2+4.25rem))] w-[min(72.5rem,calc(100%-11.875rem))] max-[56.25rem]:ml-[3.75rem] max-[56.25rem]:w-[calc(100%-5rem)] max-sm:mx-[1.125rem] max-sm:w-[calc(100%-2.25rem)]';
+const navLink = "relative py-2 text-[.5625rem] font-semibold uppercase tracking-[.18em] after:absolute after:inset-x-0 after:bottom-0 after:h-[0.0625rem] after:origin-center after:scale-x-0 after:bg-[#ff5a1f] after:transition-transform hover:after:scale-x-[.45] max-sm:text-[.5rem] max-sm:tracking-[.1em]";
+const heading = 'mb-[1.5625rem] grid grid-cols-[auto_1fr_auto] items-center gap-7 max-sm:grid-cols-[1fr_auto] max-sm:gap-[.9375rem]';
+const headingText = 'm-0 whitespace-nowrap text-[.625rem] font-semibold uppercase tracking-[.2em]';
 ---
 
 <Base head={{ title, description }}>
-  <Hero />
-  <Sponsors />
-  <ProjectList />
-  <RecentPosts postList={lastThreePosts} />
-  <CTA />
+  <div class="fixed inset-y-0 left-[3.125rem] z-[5] flex w-[2.75rem] flex-col items-center justify-around border-x border-[#dedbd2] bg-[#f7f5f0]/90 text-[.5rem] font-semibold tracking-[.18em] text-[#6f6a64] [writing-mode:vertical-rl] dark:border-[#2a2926] dark:bg-[#0b0b0b]/90 dark:text-[#9a948c] max-sm:hidden" aria-hidden="true">
+    <span>JD-001</span><i class="size-[.3125rem] rounded-full bg-[#ff5a1f]"></i><span>JOURNAL · PUBLIC</span><i class="size-[.3125rem] rounded-full bg-[#ff5a1f]"></i>
+  </div>
+  <header class:list={[frame, 'flex h-[6.5625rem] items-center justify-between max-sm:h-[4.875rem]']}>
+    <a class="text-[1.0625rem] font-medium tracking-[-.04em] no-underline" href="/" aria-label="Julian David home"><b class="font-medium text-[#ff5a1f]">/</b> jd</a>
+    <nav class="flex items-center gap-[3.375rem] max-[56.25rem]:gap-[1.375rem] max-sm:gap-[.8125rem]" aria-label="Primary navigation">
+      <a class:list={[navLink, 'after:scale-x-[.45]']} href="/posts/">Writing</a><a class={navLink} href="/projects/">Projects</a><a class={navLink} href="/notes/">Notes</a><a class={navLink} href="/about/">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class:list={[frame, 'grid min-h-[29.375rem] grid-cols-[1.4fr_.8fr] items-center max-[56.25rem]:min-h-[26.875rem] max-[56.25rem]:grid-cols-[1fr_.55fr] max-sm:block max-sm:min-h-[35rem] max-sm:pt-[3.75rem]']}>
+      <h1 class="my-[1.125rem] mb-10 text-[clamp(4rem,6.3vw,6rem)] font-medium leading-[.94] tracking-[-.072em] max-[56.25rem]:text-[3.875rem] max-sm:text-[clamp(3.125rem,16vw,4.25rem)]">A journal<br /><span class="font-normal tracking-[-.085em]">of ideas,</span><br />systems, and<br /><em class="not-italic font-normal tracking-[-.09em]">experiments</em><b class="text-[.5em] text-[#ff5a1f]">.</b></h1>
+      <div class="mx-auto mt-[2.1875rem] w-[13.75rem] self-center text-[.6875rem] tracking-[.04em] text-[#6f6a64] dark:text-[#9a948c] max-sm:mx-0 max-sm:mt-[3.4375rem] max-sm:w-auto">
+        <div class="relative mb-[2.125rem] size-[6.875rem] bg-[linear-gradient(#dedbd2,#dedbd2),linear-gradient(90deg,#dedbd2,#dedbd2)] bg-[length:0.0625rem_100%,100%_0.0625rem] bg-center bg-no-repeat dark:bg-[linear-gradient(#2a2926,#2a2926),linear-gradient(90deg,#2a2926,#2a2926)] max-sm:hidden" aria-hidden="true"><i class="absolute left-[3.25rem] top-[3.25rem] size-[.375rem] bg-[#ff5a1f]"></i></div>
+        <p>Thinking in public.<br />Building in public.<br />Learning in public.</p><a class="mt-3 inline-block text-[1.0625rem] text-[#ff5a1f] no-underline" href="#recent" aria-label="Go to recent writing">↓</a>
+      </div>
+    </section>
+
+    <section class:list={[frame, 'py-[2.625rem] pb-[3.4375rem] max-sm:py-[2.125rem]']} id="recent">
+      <div class={heading}><h2 class={headingText}>Recent <b class="text-[#ff5a1f]">/</b></h2><span class="h-[0.0625rem] bg-[#dedbd2] dark:bg-[#2a2926] max-sm:hidden"></span><a class:list={[headingText, 'group no-underline max-sm:text-[.5rem] max-sm:tracking-[.1em]']} href="/posts/">View all writing <b class="ml-[1.375rem] inline-block transition-transform group-hover:translate-x-1 max-sm:ml-[.3125rem]">→</b></a></div>
+      <div class="border-t border-[#dedbd2] dark:border-[#2a2926] max-sm:border-0">
+        {lastThreePosts.map((post) => (
+          <a class="group grid min-h-[3.8125rem] grid-cols-[6.875rem_1.25rem_minmax(17.5rem,1fr)_6.875rem_7.5rem_1.375rem] items-center border-b border-[#dedbd2] no-underline transition-colors hover:bg-[#ff5a1f]/[.025] dark:border-[#2a2926] max-[56.25rem]:grid-cols-[5.9375rem_1.125rem_1fr_5.625rem_1.375rem] max-sm:relative max-sm:flex max-sm:min-h-[5.75rem] max-sm:flex-wrap max-sm:gap-x-[.8125rem] max-sm:gap-y-[.3125rem] max-sm:py-[1.125rem] max-sm:pr-5" href={publicPostUrl(post.url)}>
+            <time class="text-[.5625rem] uppercase tracking-[.08em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:text-[#9a948c]">{formatDate(post.frontmatter.pubDate)}</time>
+            <i class="size-[.3125rem] rounded-full bg-[#ff5a1f] transition-shadow group-hover:shadow-[0_0_0_0.25rem_rgba(255,90,31,.16)] max-sm:absolute max-sm:right-[.1875rem] max-sm:top-6"></i>
+            <strong class="text-lg font-medium tracking-[-.035em] transition-transform group-hover:translate-x-1 max-sm:order-2 max-sm:w-full max-sm:text-[1.0625rem]">{post.frontmatter.title.trim()}</strong>
+            <span class="text-[.5625rem] uppercase tracking-[.08em] text-[#6f6a64] dark:text-[#9a948c] max-sm:order-3">Writing</span>
+            <span class="text-[.5625rem] uppercase tracking-[.08em] text-[#6f6a64] dark:text-[#9a948c] max-[56.25rem]:hidden">{post.frontmatter.tags?.slice(0, 2).join(', ') || 'Journal'}</span>
+            <b class="font-normal transition-transform group-hover:translate-x-1 max-sm:absolute max-sm:bottom-5 max-sm:right-0">→</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class:list={[frame, 'py-[2.625rem] pb-[3.4375rem] max-sm:py-[2.125rem]']} id="projects">
+      <div class={heading}><h2 class={headingText}>Projects <b class="text-[#ff5a1f]">/</b></h2><span class="h-[0.0625rem] bg-[#dedbd2] dark:bg-[#2a2926] max-sm:hidden"></span><a class:list={[headingText, 'group no-underline max-sm:text-[.5rem] max-sm:tracking-[.1em]']} href="/projects/">View all projects <b class="ml-[1.375rem] inline-block transition-transform group-hover:translate-x-1 max-sm:ml-[.3125rem]">→</b></a></div>
+      <div class="grid grid-cols-2 gap-[.625rem] max-[56.25rem]:grid-cols-1">
+        {[
+          ['01','Inmune','AI operating system','for knowledge work.','2026.06.08','/assets/journal/inmune-system.png','text-[#0d0d0d] border-[#dedbd2]'],
+          ['02','Nano War','Real-time strategy game','about tiny civilizations.','2026.05.30','/assets/journal/nano-war-orbits.png','text-[#f4f1ea] border-[#2b2b2b]'],
+        ].map(([index,name,line1,line2,date,image,color]) => (
+          <a class:list={['group relative isolate flex min-h-[22.5rem] flex-col justify-between overflow-hidden border p-7 no-underline hover:border-[#ff5a1f]/60 max-sm:min-h-[20.3125rem]', color]}>
+            <img class="absolute inset-0 -z-10 size-full object-cover transition duration-[600ms] group-hover:scale-[1.018] group-hover:opacity-90" src={image} alt="" />
+            <small class="text-[.625rem] font-semibold">{index}</small><div><h3 class="mb-[.5625rem] mt-[5.625rem] text-[2.3125rem] font-medium tracking-[-.06em]">{name}</h3><p class="m-0 text-[.6875rem] tracking-[.02em]">{line1}<br />{line2}</p></div>
+            <footer class="flex items-end justify-between text-[.5625rem] uppercase tracking-[.09em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:text-[#9a948c]"><span>Last update<br /><b class="font-medium">{date}</b></span><b class="font-medium transition-transform group-hover:translate-x-1">→</b></footer>
+          </a>
+        ))}
+      </div>
+      <div class="flex h-[2.625rem] items-center justify-center gap-2" aria-hidden="true"><b class="h-[0.0625rem] w-[1.5625rem] bg-[#ff5a1f]"></b>{[1,2,3].map(() => <i class="h-[0.0625rem] w-[1.5625rem] bg-[#dedbd2] dark:bg-[#2a2926]"></i>)}</div>
+    </section>
+
+    <section class:list={[frame, 'py-[2.625rem] pb-[3.4375rem] max-sm:py-[2.125rem]']} id="notes">
+      <div class={heading}><h2 class={headingText}>Latest notes <b class="text-[#ff5a1f]">/</b></h2><span class="h-[0.0625rem] bg-[#dedbd2] dark:bg-[#2a2926] max-sm:hidden"></span><a class:list={[headingText, 'group no-underline max-sm:text-[.5rem] max-sm:tracking-[.1em]']} href="/notes/">View all notes <b class="ml-[1.375rem] inline-block transition-transform group-hover:translate-x-1 max-sm:ml-[.3125rem]">→</b></a></div>
+      <div class="grid grid-cols-5 border-y border-[#dedbd2] dark:border-[#2a2926] max-[56.25rem]:grid-cols-3 max-sm:block max-sm:border-b-0">
+        {notes.map(([date, noteTitle, mark]) => (
+          <a class="grid min-h-[11.5625rem] grid-rows-[2.875rem_auto_1fr] border-r border-[#dedbd2] px-[1.375rem] py-[1.5625rem] no-underline transition-colors last:border-r-0 hover:bg-[#ff5a1f]/[.025] dark:border-[#2a2926] max-[56.25rem]:[&:nth-child(3)]:border-r-0 max-sm:grid-cols-[2.8125rem_5.625rem_1fr] max-sm:grid-rows-1 max-sm:items-center max-sm:border-b max-sm:border-r-0 max-sm:px-0 max-sm:py-[1.125rem]" href="#notes"><i class="text-lg not-italic max-sm:h-auto">{mark}</i><time class="text-[.5625rem] tracking-[.08em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:text-[#9a948c]">{date}</time><strong class="mt-4 text-xs font-medium leading-[1.65] max-sm:m-0">{noteTitle}</strong></a>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <footer class="mt-[3.625rem] border-t border-[#dedbd2] dark:border-[#2a2926]" id="about">
+    <div class:list={[frame, 'grid min-h-[17.1875rem] grid-cols-[.85fr_1.65fr_1fr] max-[56.25rem]:grid-cols-[1fr_1.3fr] max-sm:block']}>
+      <div class="min-w-0 border-r border-[#dedbd2] px-7 py-8 dark:border-[#2a2926] max-sm:border-b max-sm:border-r-0 max-sm:px-0 max-sm:py-[2.1875rem]"><b class="font-medium text-[#ff5a1f]">/</b><p class="text-[.6875rem] leading-[1.65] text-[#6f6a64] dark:text-[#9a948c]">This is my journal.<br />I write to think clearly.<br />I build to understand.<br />I share to connect.</p><div class="mt-7 flex gap-[1.125rem]">{[['GH','https://github.com/anlijudavid'],['X','https://x.com/'],['IN','https://linkedin.com/'],['RSS','/rss.xml'],['@','mailto:hello@iamjuliand.com']].map(([label,url]) => <a class="text-[.5625rem] font-semibold text-[#6f6a64] no-underline dark:text-[#9a948c]" href={url}>{label}</a>)}</div></div>
+      <img class="size-full min-w-0 border-r border-[#dedbd2] object-cover grayscale dark:border-[#2a2926] dark:opacity-80 dark:invert max-[56.25rem]:hidden" src="/assets/journal/footer-topography.png" alt="Abstract ink topographic landscape" />
+      <div class="flex min-w-0 flex-col justify-center px-7 py-8 max-sm:min-h-[15rem] max-sm:border-b-0 max-sm:px-0 max-sm:py-[2.1875rem]"><h2 class="mb-3 max-w-[12.5rem] text-[1.0625rem] font-medium leading-[1.15] tracking-[-.03em]">Subscribe to my Newsletters</h2><p class="text-[.6875rem] leading-[1.65] text-[#6f6a64] dark:text-[#9a948c]">Occasional updates on new posts and projects.</p><form class="mt-[1.375rem] flex border-b border-[#0d0d0d] dark:border-[#f4f1ea]" action="mailto:hello@iamjuliand.com" method="post"><label class="sr-only" for="email">Email address</label><input class="w-full border-0 bg-transparent py-[.625rem] text-[.5625rem] tracking-[.06em] outline-0" id="email" type="email" name="email" placeholder="YOUR@EMAIL.COM" required /><button class="cursor-pointer border-0 bg-transparent transition hover:translate-x-1 hover:text-[#ff5a1f]" type="submit" aria-label="Subscribe">→</button></form></div>
+    </div>
+    <div class:list={[frame, 'flex h-16 items-center justify-between border-t border-[#dedbd2] text-[.5rem] uppercase tracking-[.1em] text-[#6f6a64] dark:border-[#2a2926] dark:text-[#9a948c]']}><span>© 2026 Julian David</span><a class="no-underline" href="#">Top ↑</a></div>
+  </footer>
 </Base>

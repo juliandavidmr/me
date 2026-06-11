@@ -1,9 +1,8 @@
 ---
 import '@/styles/global.css';
 
-import { Footer } from '@/partials/Footer';
-import { Navbar } from '@/partials/Navbar';
 import { AppConfig } from '@/utils/AppConfig';
+import { ClientRouter } from 'astro:transitions';
 
 export interface Props {
   head: {
@@ -17,7 +16,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<html lang="en">
+<html lang="en" class="scroll-smooth bg-[#f7f5f0] dark:bg-[#0b0b0b]">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,12 +26,17 @@ const {
 
     <link rel="alternate" type="application/rss+xml" href="/rss.xml" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <ClientRouter />
   </head>
-  <body class="bg-slate-900 text-gray-100">
-    <Navbar />
-
+  <body
+    class="m-0 bg-[#f7f5f0] font-['Geist','Geist_Sans',ui-sans-serif,system-ui,sans-serif] text-sm leading-[1.55] text-[#0d0d0d] antialiased dark:bg-[#0b0b0b] dark:text-[#f4f1ea]"
+  >
     <slot />
-
-    <Footer />
   </body>
 </html>

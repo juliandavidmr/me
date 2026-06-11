@@ -1,23 +1,259 @@
 ---
-import type { IFrontmatter } from 'astro-boilerplate-components';
+import type {
+  IFrontmatter,
+  MarkdownInstance,
+} from 'astro-boilerplate-components';
 
-import { BlogPost } from '@/partials/BlogPost';
-import { CTA } from '@/partials/CTA';
 import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
+import { sortByDate } from '@/utils/Posts';
 
-export interface Props {
-  content: IFrontmatter;
+interface ArticleFrontmatter extends IFrontmatter {
+  updatedDate?: string;
+  author?: string;
+  tags?: string[];
+  images?: string[];
+  imgSrc?: string;
+  imgAlt?: string;
+  heroLayout?: 'normal' | 'wide' | 'full' | 'bleed' | 'screen';
 }
-
+export interface Props {
+  content: ArticleFrontmatter;
+}
 const { content } = Astro.props as Props;
-const title = `${content.title} - ${AppConfig.site_name}`;
+const articleTitle = content.title.trim();
+const title = `${articleTitle} — ${AppConfig.site_name}`;
+const allPosts = sortByDate(
+  Object.values(
+    import.meta.glob<MarkdownInstance<IFrontmatter>>('../pages/posts/**/*.md', {
+      eager: true,
+    }),
+  ),
+);
+const currentIndex = allPosts.findIndex(
+  (post) =>
+    post.frontmatter.title === content.title &&
+    String(post.frontmatter.pubDate) === String(content.pubDate),
+);
+const newerPost = currentIndex > 0 ? allPosts[currentIndex - 1] : undefined;
+const olderPost =
+  currentIndex >= 0 && currentIndex < allPosts.length - 1
+    ? allPosts[currentIndex + 1]
+    : undefined;
+const heroImage = content.imgSrc || content.images?.[0];
+const updated = content.updatedDate || content.pubDate;
+const author = content.author || AppConfig.author;
+const formatDate = (date: string | Date) =>
+  new Intl.DateTimeFormat('en-CA', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+    .format(new Date(date))
+    .replaceAll('-', '.');
+const publicPostUrl = (post?: MarkdownInstance<IFrontmatter>) =>
+  post?.url?.replace(/^\/posts/, '') || '/posts/';
+const frame =
+  'ml-[max(8.4375rem,calc((100%-72.5rem)/2+4.25rem))] w-[min(72.5rem,calc(100%-11.875rem))] max-[56.25rem]:ml-[3.75rem] max-[56.25rem]:w-[calc(100%-5rem)] max-sm:mx-[1.125rem] max-sm:w-[calc(100%-2.25rem)]';
+const navLink =
+  'relative py-2 text-[.5625rem] font-semibold uppercase tracking-[.18em] after:absolute after:inset-x-0 after:bottom-0 after:h-[0.0625rem] after:origin-center after:scale-x-0 after:bg-[#ff5a1f] after:transition-transform hover:after:scale-x-[.45] max-sm:text-[.5rem] max-sm:tracking-[.1em]';
+const heroWidths = {
+  normal: 'w-[min(40rem,calc(100%-3rem))] max-sm:w-[calc(100%-2.25rem)]',
+  wide: 'w-[min(57.5rem,calc(100%-3rem))] max-sm:w-[calc(100%-2.25rem)]',
+  full: 'w-[min(72.5rem,calc(100%-3rem))] max-sm:w-[calc(100%-2.25rem)]',
+  bleed: 'w-[calc(100%-3rem)] max-sm:w-full',
+  screen: 'w-full [&_img]:h-[calc(100vh-5.5rem)] [&_img]:max-h-none',
+};
+const prose = [
+  'prose prose-neutral dark:prose-invert mx-auto w-[min(40rem,calc(100%-3rem))] max-w-none text-[1.1875rem] leading-[1.82] tracking-[-.012em] max-sm:w-[calc(100%-2.25rem)] max-sm:text-[1.0625rem] max-sm:leading-[1.8]',
+  '[&_p]:mb-[1.6em] [&_p]:mt-0 [&_p]:!font-sans [&_p]:!text-inherit [&_p]:!text-[inherit] [&_p]:!leading-[inherit]',
+  '[&_div]:!font-sans [&_div]:!text-inherit [&_span]:!font-sans [&_span]:!text-inherit [&_a]:!font-sans [&_a]:!text-inherit [&_a]:underline [&_a]:decoration-[#ff5a1f]/60 [&_a]:underline-offset-[.18em] hover:[&_a]:!text-[#ff5a1f]',
+  '[&_h1]:mt-[2.2em] [&_h1]:mb-[.65em] [&_h1]:scroll-mt-[4.375rem] [&_h1]:font-sans [&_h1]:text-[3.625rem] [&_h1]:font-medium [&_h1]:leading-none [&_h1]:tracking-[-.055em] max-sm:[&_h1]:text-[2.625rem]',
+  '[&_h2]:mt-[3.3em] [&_h2]:mb-[.8em] [&_h2]:border-t [&_h2]:border-[#dedbd2] [&_h2]:pt-[1.5625rem] [&_h2]:font-sans [&_h2]:text-[2.625rem] [&_h2]:font-medium [&_h2]:leading-[1.06] [&_h2]:tracking-[-.055em] dark:[&_h2]:border-[#2a2926] max-sm:[&_h2]:text-[2.125rem]',
+  '[&_h3]:mt-[2.8em] [&_h3]:mb-[.7em] [&_h3]:font-sans [&_h3]:text-[1.8125rem] [&_h3]:font-medium [&_h3]:leading-[1.12] [&_h3]:tracking-[-.055em] max-sm:[&_h3]:text-[1.5625rem]',
+  '[&_h4]:mt-[2.5em] [&_h4]:mb-[.7em] [&_h4]:font-sans [&_h4]:text-[1.3125rem] [&_h4]:font-medium [&_h4]:tracking-[-.03em]',
+  '[&_strong]:!font-sans [&_strong]:font-semibold [&_b]:!font-sans [&_b]:font-semibold [&_li]:!font-sans [&_li]:!text-inherit [&_li]:my-[.55em] [&_li]:pl-[.45em] marker:[&_li]:text-[#ff5a1f]',
+  '[&_ul]:my-[1.8em] [&_ul]:mb-[2.2em] [&_ul]:pl-[1.25em] [&_ol]:my-[1.8em] [&_ol]:mb-[2.2em] [&_ol]:pl-[1.25em]',
+  '[&_hr]:mx-auto [&_hr]:my-[5.3125rem] [&_hr]:h-[0.0625rem] [&_hr]:w-[2.375rem] [&_hr]:border-0 [&_hr]:bg-[#ff5a1f]',
+  '[&_blockquote]:relative [&_blockquote]:left-1/2 [&_blockquote]:my-[2.5em] [&_blockquote]:mb-[2.7em] [&_blockquote]:w-[min(48.75rem,calc(100vw-3rem))] [&_blockquote]:-translate-x-1/2 [&_blockquote]:border-l [&_blockquote]:border-[#ff5a1f] [&_blockquote]:py-3 [&_blockquote]:pl-[2.125rem] [&_blockquote]:font-sans [&_blockquote]:text-[clamp(1.75rem,3.3vw,2.75rem)] [&_blockquote]:font-medium [&_blockquote]:not-italic [&_blockquote]:leading-[1.2] [&_blockquote]:tracking-[-.055em] max-sm:[&_blockquote]:w-[calc(100vw-2.25rem)] max-sm:[&_blockquote]:pl-5 max-sm:[&_blockquote]:text-[1.6875rem]',
+  '[&_img]:h-auto [&_img]:max-w-full [&_video]:h-auto [&_video]:max-w-full [&_svg]:h-auto [&_svg]:max-w-full [&_.separator]:my-[3.4375rem] [&_.separator]:text-center [&_.separator_a]:!m-0 [&_.separator_a]:block [&_.separator_img]:!h-auto [&_.separator_img]:!w-auto [&_.separator_img]:max-w-full',
+  '[&_pre]:relative [&_pre]:left-1/2 [&_pre]:my-[2.375rem] [&_pre]:w-[min(57.5rem,calc(100vw-3rem))] [&_pre]:max-w-none [&_pre]:-translate-x-1/2 [&_pre]:overflow-x-auto [&_pre]:border [&_pre]:border-[#dedbd2] [&_pre]:bg-white/70 [&_pre]:px-6 [&_pre]:py-[1.375rem] [&_pre]:text-[.8125rem] [&_pre]:leading-[1.65] [&_pre]:shadow-none dark:[&_pre]:border-[#2a2926] dark:[&_pre]:bg-[#111]/70 max-sm:[&_pre]:w-[calc(100vw-1.125rem)]',
+  '[&_pre_*]:!bg-transparent [&_pre_*]:!font-mono [&_pre_*]:!text-[inherit] [&_pre_*]:!leading-[inherit] [&_:not(pre)>code]:border [&_:not(pre)>code]:border-[#dedbd2] [&_:not(pre)>code]:bg-white/60 [&_:not(pre)>code]:px-[.35em] [&_:not(pre)>code]:py-[.16em] [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[.78em] dark:[&_:not(pre)>code]:border-[#2a2926] dark:[&_:not(pre)>code]:bg-[#111]/60',
+  '[&_table]:relative [&_table]:left-1/2 [&_table]:my-[2.8125rem] [&_table]:w-[min(57.5rem,calc(100vw-3rem))] [&_table]:max-w-none [&_table]:-translate-x-1/2 [&_table]:border-collapse [&_table]:border [&_table]:border-[#dedbd2] [&_table]:text-[.8125rem] [&_table]:shadow-none dark:[&_table]:border-[#2a2926] max-sm:[&_table]:w-[calc(100vw-1.125rem)] [&_th]:border [&_th]:border-[#dedbd2] [&_th]:bg-white/60 [&_th]:p-3 [&_th]:text-left [&_th]:font-semibold dark:[&_th]:border-[#2a2926] dark:[&_th]:bg-[#111]/60 [&_td]:border [&_td]:border-[#dedbd2] [&_td]:p-3 dark:[&_td]:border-[#2a2926]',
+  '[&_sup]:text-[.65em] [&_sup]:text-[#ff5a1f] [&_.footnotes]:mt-20 [&_.footnotes]:border-t [&_.footnotes]:border-[#dedbd2] [&_.footnotes]:pt-7 [&_.footnotes]:text-[.8125rem] [&_.footnotes]:leading-[1.65] [&_.footnotes]:text-[#6f6a64] dark:[&_.footnotes]:border-[#2a2926] dark:[&_.footnotes]:text-[#9a948c]',
+].join(' ');
 ---
 
 <Base head={{ title, description: content.description }}>
-  <BlogPost frontmatter={content}>
-    <slot />
-  </BlogPost>
+  <header
+    class:list={[
+      frame,
+      'flex h-[5.5rem] items-center justify-between max-sm:h-[4.875rem]',
+    ]}
+  >
+    <a
+      class="text-[1.0625rem] font-medium tracking-[-.04em] no-underline"
+      href="/"
+      aria-label="Julian David home"
+      ><b class="font-medium text-[#ff5a1f]">/</b> jd</a
+    >
+    <nav
+      class="flex items-center gap-[3.375rem] max-[56.25rem]:gap-[1.375rem] max-sm:gap-3"
+      aria-label="Primary navigation"
+    >
+      <a class:list={[navLink, 'after:scale-x-[.45]']} href="/posts/">Writing</a
+      ><a class={navLink} href="/projects/">Projects</a><a
+        class={navLink}
+        href="/notes/">Notes</a
+      ><a class={navLink} href="/about/">About</a>
+    </nav>
+  </header>
 
-  <CTA />
+  <aside
+    class="fixed left-[max(1.625rem,calc((100vw-72.5rem)/2-3.5rem))] top-[34vh] z-[3] flex h-[14.375rem] w-[1.375rem] flex-col items-center gap-[1.1875rem] text-[.5rem] tracking-[.08em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:text-[#9a948c] max-[56.25rem]:hidden"
+    aria-label="Reading progress"
+  >
+    <span>01</span><div
+      class="relative w-[0.0625rem] flex-1 overflow-hidden bg-[#dedbd2] dark:bg-[#2a2926]"
+    >
+      <i
+        class="absolute inset-0 origin-top scale-y-0 bg-[#ff5a1f] transition-transform duration-100"
+        data-reading-progress></i>
+    </div><span>02</span><span>03</span>
+  </aside>
+
+  <main class="overflow-clip py-20 pb-[8.125rem] max-sm:pt-[3.25rem]">
+    <header
+      class="mx-auto mb-[5.625rem] w-[min(57.5rem,calc(100%-3rem))] max-sm:mb-[3.875rem] max-sm:w-[calc(100%-2.25rem)]"
+    >
+      <a
+        class="mb-12 inline-block text-[.5625rem] font-semibold uppercase tracking-[.18em] text-[#6f6a64] no-underline dark:text-[#9a948c] max-sm:mb-8"
+        href="/posts/">Writing <b class="text-[#ff5a1f]">/</b> Journal entry</a
+      >
+      <h1
+        class="m-0 max-w-[56.25rem] text-[clamp(4.375rem,8.1vw,7.625rem)] font-medium leading-[.92] tracking-[-.075em] text-balance max-sm:text-[clamp(3rem,15vw,4.25rem)] max-sm:leading-[.96]"
+        transition:name="article-title"
+      >
+        {articleTitle}<i class="not-italic text-[#ff5a1f]">.</i>
+      </h1>
+      <div
+        class="mt-12 flex flex-wrap gap-x-[2.125rem] gap-y-[.875rem] border-t border-[#dedbd2] pt-[1.125rem] text-[.5625rem] uppercase tracking-[.1em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:border-[#2a2926] dark:text-[#9a948c] max-sm:mt-[1.875rem] max-sm:grid max-sm:gap-[.4375rem]"
+      >
+        <span>Updated {formatDate(updated)}</span><span>{author}</span><span
+          >{content.tags?.join(' · ') || 'Journal'}</span
+        >
+      </div>
+    </header>
+
+    {
+      heroImage && (
+        <figure
+          class:list={[
+            'mx-auto mb-[6.875rem] max-sm:mb-[4.375rem]',
+            heroWidths[content.heroLayout || 'wide'],
+          ]}
+          transition:name="article-hero-image"
+        >
+          <img
+            class="block max-h-[78vh] w-full object-cover"
+            src={heroImage}
+            alt={content.imgAlt || ''}
+          />
+          {content.imgAlt && (
+            <figcaption class="mt-[.625rem] text-[.5625rem] tracking-[.04em] text-[#6f6a64] dark:text-[#9a948c]">
+              {content.imgAlt}
+            </figcaption>
+          )}
+        </figure>
+      )
+    }
+
+    <article id="article-prose" class={prose} transition:animate="fade">
+      <slot />
+    </article>
+
+    <footer
+      class="mx-auto mt-[7.5rem] w-[min(57.5rem,calc(100%-3rem))] max-sm:mt-[5.3125rem] max-sm:w-[calc(100%-2.25rem)]"
+    >
+      <div class="relative h-[0.0625rem] bg-[#dedbd2] dark:bg-[#2a2926]">
+        <i class="absolute -top-0.5 left-0 size-[.3125rem] bg-[#ff5a1f]"></i>
+      </div>
+      <div
+        class="grid grid-cols-3 gap-[1.875rem] py-[1.875rem] pb-[4.0625rem] text-[.625rem] leading-[1.7] text-[#6f6a64] dark:text-[#9a948c] max-sm:block max-sm:pb-[2.375rem] [&_p]:m-0 max-sm:[&_p]:my-2 [&_strong]:font-medium [&_strong]:text-[#0d0d0d] dark:[&_strong]:text-[#f4f1ea] [&_span]:font-medium [&_span]:text-[#0d0d0d] dark:[&_span]:text-[#f4f1ea]"
+      >
+        <p>Written by <strong>{author}</strong></p><p>
+          Last updated <time
+            class="font-medium text-[#0d0d0d] [font-variant-numeric:tabular-nums] dark:text-[#f4f1ea]"
+            >{formatDate(updated)}</time
+          >
+        </p><p>Tags: <span>{content.tags?.join(' · ') || 'Journal'}</span></p>
+      </div>
+      <nav
+        class="grid grid-cols-2 border-y border-[#dedbd2] dark:border-[#2a2926] max-sm:block"
+        aria-label="Article navigation"
+      >
+        {
+          olderPost ? (
+            <a
+              class="group flex min-h-[8.125rem] flex-col justify-between py-7 no-underline max-sm:min-h-[6.875rem]"
+              href={publicPostUrl(olderPost)}
+            >
+              <>
+                <span class="text-[.5rem] uppercase tracking-[.14em] text-[#6f6a64] dark:text-[#9a948c]">
+                  Previous article ←
+                </span>
+                <strong class="text-[1.0625rem] font-medium leading-[1.25] tracking-[-.035em] transition-transform group-hover:translate-x-1">
+                  {olderPost.frontmatter.title.trim()}
+                </strong>
+              </>
+            </a>
+          ) : (
+            <span />
+          )
+        }
+        {
+          newerPost ? (
+            <a
+              class="group flex min-h-[8.125rem] flex-col justify-between border-l border-[#dedbd2] py-7 pl-[2.1875rem] text-right no-underline dark:border-[#2a2926] max-sm:min-h-[6.875rem] max-sm:border-l-0 max-sm:border-t max-sm:pl-0 max-sm:text-left"
+              href={publicPostUrl(newerPost)}
+            >
+              <>
+                <span class="text-[.5rem] uppercase tracking-[.14em] text-[#6f6a64] dark:text-[#9a948c]">
+                  Next article →
+                </span>
+                <strong class="text-[1.0625rem] font-medium leading-[1.25] tracking-[-.035em] transition-transform group-hover:-translate-x-1 max-sm:group-hover:translate-x-1">
+                  {newerPost.frontmatter.title.trim()}
+                </strong>
+              </>
+            </a>
+          ) : (
+            <span />
+          )
+        }
+      </nav>
+    </footer>
+  </main>
+
+  <script>
+    const updateReadingProgress = () => {
+      const progress = document.querySelector<HTMLElement>(
+        '[data-reading-progress]',
+      );
+      const article = document.querySelector<HTMLElement>('#article-prose');
+      if (!progress || !article) return;
+      const value = Math.max(
+        0,
+        Math.min(
+          1,
+          (window.scrollY - article.offsetTop) /
+            (article.offsetHeight - window.innerHeight),
+        ),
+      );
+      progress.style.transform = `scaleY(${value})`;
+    };
+    document.addEventListener('astro:page-load', updateReadingProgress);
+    document.addEventListener('scroll', updateReadingProgress, {
+      passive: true,
+    });
+  </script>
 </Base>

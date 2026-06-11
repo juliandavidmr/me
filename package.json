@@ -50,8 +50,9 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.7.0",
+    "@astrojs/mdx": "^6.0.3",
     "astro-boilerplate-components": "^1.0.16",
-    "date-fns": "^2.30.0",
+    "date-fns": "^4.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "wrangler": "^4.99.0"

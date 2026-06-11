@@ -3,6 +3,7 @@ import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import robotsTxt from 'astro-robots-txt';
+import mdx from '@astrojs/mdx';
 
 import cloudflare from '@astrojs/cloudflare';
 
@@ -26,7 +27,7 @@ export default defineConfig({
     },
   },
 
-  integrations: [react(), sitemap(), robotsTxt()],
+  integrations: [react(), mdx(), sitemap(), robotsTxt()],
   vite: {
     plugins: [tailwindcss()],
   },
