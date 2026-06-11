@@ -1,13 +1,72 @@
 ---
-title: "Enmascarar email con Javascript"
-description: "Cuando se trata de proteger la privacidad en línea, ocultar direcciones de correo electrónico es una práctica común. En este breve artículo, exploraremos el uso de expresiones regulares (regex) en un ejemplo de código React para lograr este"
-pubDate: "2023-10-13T15:22:00.002-05:00"
-updatedDate: "2023-10-13T15:22:21.827-05:00"
-author: "Julian David"
-tags: ["react","tutorial"]
-originalUrl: "https://www.iamjuliand.com/2023/10/enmascarar-email-con-javascript.html"
-bloggerId: "7275898541266449741"
+title: 'Enmascarar email con Javascript'
+description: 'Cuando se trata de proteger la privacidad en línea, ocultar direcciones de correo electrónico es una práctica común. En este breve artículo, exploraremos el uso de expresiones regulares (regex) en un ejemplo de código React para lograr este'
+pubDate: '2023-10-13T15:22:00.002-05:00'
+updatedDate: '2023-10-13T15:22:21.827-05:00'
+author: 'Julian David'
+tags: ['react', 'tutorial']
+originalUrl: 'https://www.iamjuliand.com/2023/10/enmascarar-email-con-javascript.html'
+bloggerId: '7275898541266449741'
 commentsCount: 0
 images: []
 ---
- Cuando se trata de proteger la privacidad en línea, ocultar direcciones de correo electrónico es una práctica común. En este breve artículo, exploraremos el uso de expresiones regulares (regex) en un ejemplo de código <a href="https://react.dev" target="_blank">React</a> para lograr este propósito. Vamos a analizar el siguiente código:<div><div></div><blockquote><div><span style="font-family: Source Code Pro; font-size: x-small;">import { useState } from "react";</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;"><br /></span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">const email = "my.custom.email@domain.com";</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">const regex = /(\w{3}).*/g;</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;"><br /></span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">export function App() {</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; const [hide, setHide] = useState(false);</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; const renderEmail = hide</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; ? email.replace(regex, "$1********@********")</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; : email;</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;"><br /></span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; return (</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; &lt;div&gt;</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; &nbsp; {renderEmail}</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; &nbsp; &lt;br /&gt;</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; &nbsp; &lt;button</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; type="button"</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; onClick={() =&gt; {</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; setHide((prev) =&gt; !prev);</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; }}</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; &nbsp; &gt;</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; {hide ? "Show email" : "Hide email"}</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; &nbsp; &lt;/button&gt;</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; &nbsp; &lt;/div&gt;</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">&nbsp; );</span></div><div><span style="font-family: Source Code Pro; font-size: x-small;">}</span></div></blockquote><h4 style="text-align: left;">Desglose del Regex:</h4>En este código, se utiliza la expresión regular <b>/(\w{3}).*/g</b> para ocultar parte de la dirección de correo electrónico. Desglosemos cada parte:</div><div><ul style="text-align: left;"><li><b><u>/</u></b>: Delimita el inicio y el final de la expresión regular.</li><li><b><u>(\w{3})</u></b>: Captura los primeros tres caracteres de la dirección de correo electrónico y los almacena en el grupo de captura <b><u>$1</u></b>.</li><li><b>.*</b>: Coincide con el resto de la dirección de correo electrónico.</li></ul><h4 style="text-align: left;">Desventajas y solución:</h4>Aunque esta técnica puede ser efectiva, presenta algunas desventajas:</div><div><ul><li>Dependencia del lado del cliente: Este enfoque depende del código ejecutándose en el lado del cliente, lo que significa que no proporciona una solución integral de seguridad. Recuerda que la seguridad es un tema complejo, y estas soluciones deben usarse con precaución y en combinación con otras medidas de seguridad.</li></ul><ul style="text-align: left;"><li>Limitado a direcciones específicas: Este regex asume que las direcciones de correo electrónico siempre tendrán al menos tres caracteres antes del símbolo '@', lo cual puede no ser cierto en todos los casos. Aquí propongo dinamizar la captura de los elementos con regex de la siguiente manera:</li></ul><blockquote><span style="font-family: Source Code Pro; font-size: x-small;">const regex = /(.*)@.*/g;</span></blockquote><blockquote><span style="font-family: Source Code Pro; font-size: x-small;"> const renderEmail = hide<br /> <span>&nbsp;&nbsp; &nbsp;</span>? email.replace(regex, (match, group1) =&gt; {<br /> <span>&nbsp;&nbsp; &nbsp;<span>&nbsp;&nbsp; &nbsp;</span></span>const usernameLength = group1.length;<br /> <span><span>&nbsp;&nbsp; &nbsp;</span>&nbsp;&nbsp; &nbsp;</span>return `${group1.substring(0, usernameLength / 2)}${'*'.repeat(usernameLength / 2)}@${'*'.repeat(6)}`<br /> })<br /> <span>&nbsp;&nbsp; &nbsp;</span>: email;</span></blockquote><ul style="text-align: left;"><ul><li>Se define una expresión regular (<span style="font-family: &quot;Source Code Pro&quot;;"><b>/(.*)@.*/g</b></span>) que busca una cadena que tenga algún texto antes y después del símbolo '<b>@</b>' en una dirección de correo electrónico.</li><li>Luego, el reemplazo se realiza tomando el texto antes del símbolo '<b>@</b>' y reemplazando la segunda mitad de ese texto con asteriscos. También se reemplaza la parte después del '<b>@</b>' con asteriscos.</li></ul></ul><div></div></div>
+
+Cuando se trata de proteger la privacidad en línea, ocultar direcciones de correo electrónico es una práctica común. En este breve artículo, exploraremos el uso de expresiones regulares (regex) en un ejemplo de código [React](https://react.dev) para lograr este propósito. Vamos a analizar el siguiente código:
+
+```jsx
+import { useState } from 'react';
+
+const email = 'my.custom.email@domain.com';
+const regex = /(\w{3}).*/g;
+
+export function App() {
+  const [hide, setHide] = useState(false);
+  const renderEmail = hide
+    ? email.replace(regex, '$1********@********')
+    : email;
+
+  return (
+    <div>
+      {renderEmail}
+      <br />
+      <button
+        type="button"
+        onClick={() => {
+          setHide((prev) => !prev);
+        }}
+      >
+        {hide ? 'Show email' : 'Hide email'}
+      </button>
+    </div>
+  );
+}
+```
+
+## Desglose del Regex
+
+En este código, se utiliza la expresión regular `/(\w{3}).*/g` para ocultar parte de la dirección de correo electrónico. Desglosemos cada parte:
+
+- `/`: Delimita el inicio y el final de la expresión regular.
+- `(\w{3})`: Captura los primeros tres caracteres de la dirección de correo electrónico y los almacena en el grupo de captura `$1`.
+- `.*`: Coincide con el resto de la dirección de correo electrónico.
+
+## Desventajas y solución
+
+Aunque esta técnica puede ser efectiva, presenta algunas desventajas:
+
+- **Dependencia del lado del cliente**: Este enfoque depende del código ejecutándose en el lado del cliente, lo que significa que no proporciona una solución integral de seguridad. Recuerda que la seguridad es un tema complejo, y estas soluciones deben usarse con precaución y en combinación con otras medidas de seguridad.
+- **Limitado a direcciones específicas**: Este regex asume que las direcciones de correo electrónico siempre tendrán al menos tres caracteres antes del símbolo `@`, lo cual puede no ser cierto en todos los casos. Aquí propongo dinamizar la captura de los elementos con regex de la siguiente manera:
+
+```jsx
+const regex = /(.*)@.*/g;
+
+const renderEmail = hide
+  ? email.replace(regex, (match, group1) => {
+      const usernameLength = group1.length;
+      return `${group1.substring(0, usernameLength / 2)}${'*'.repeat(usernameLength / 2)}@${'*'.repeat(6)}`;
+    })
+  : email;
+```
+
+- Se define una expresión regular (`/(.*)@.*/g`) que busca una cadena que tenga algún texto antes y después del símbolo `@` en una dirección de correo electrónico.
+- Luego, el reemplazo se realiza tomando el texto antes del símbolo `@` y reemplazando la segunda mitad de ese texto con asteriscos. También se reemplaza la parte después del `@` con asteriscos.
