@@ -12,8 +12,11 @@ export default defineConfig({
   // Use to generate your sitemap and canonical URLs in your final build.
   site: 'https://iamjuliand.com/',
 
-  // Use to always append '/' at end of url
-  trailingSlash: 'always',
+  // Preserve legacy Blogger URLs that end in `.html`.
+  trailingSlash: 'ignore',
+  build: {
+    format: 'file',
+  },
 
   markdown: {
     shikiConfig: {

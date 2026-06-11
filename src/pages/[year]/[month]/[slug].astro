@@ -1,0 +1,29 @@
+---
+import type { MarkdownInstance } from 'astro';
+
+import BasePost from '@/templates/BasePost.astro';
+
+export function getStaticPaths() {
+  const posts = import.meta.glob<MarkdownInstance<Record<string, unknown>>>(
+    '../../posts/*/*/*.md',
+    { eager: true },
+  );
+
+  return Object.entries(posts).map(([file, post]) => {
+    const match = file.match(/posts\/(\d{4})\/(\d{2})\/([^/]+)\.md$/);
+    if (!match) throw new Error(`Unexpected migrated post path: ${file}`);
+
+    return {
+      params: { year: match[1], month: match[2], slug: match[3] },
+      props: { post },
+    };
+  });
+}
+
+const { post } = Astro.props;
+const { Content } = post;
+---
+
+<BasePost content={post.frontmatter}>
+  <Content />
+</BasePost>

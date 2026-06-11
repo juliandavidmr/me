@@ -1,0 +1,13 @@
+---
+title: "2017: C# vs. JavaScript"
+description: "CSharp vs. JavaScript ¿Cual es mejor? — Esta es la típica pregunta que me hacen muy a menudo. En realidad considero que ninguno es mejor que otro, unos lenguajes poseen más funcionalidades, otros son especiales para ciertos tipos de proyect"
+pubDate: "2017-01-05T16:05:00.005-05:00"
+updatedDate: "2023-08-10T16:08:42.769-05:00"
+author: "Julian David"
+tags: ["javascript","reflexión"]
+originalUrl: "https://www.iamjuliand.com/2017/01/2017-c-vs-javascript.html"
+bloggerId: "8283344757405844602"
+commentsCount: 0
+images: []
+---
+ CSharp vs. JavaScript ¿Cual es mejor? — Esta es la típica pregunta que me hacen muy a menudo. En realidad considero que ninguno es mejor que otro, unos lenguajes poseen más funcionalidades, otros son especiales para ciertos tipos de proyectos, etc. Esta es una cuestión de preferencias y creo que se puede aplicar a todos los lenguajes de programación populares. Mientras que unos deciden montar un API Rest con Golang, otros se van por JavaScript, Ruby o CSharp (o cualquier otro). Lo importante es saber las ventajas y desventajas que ofrece cada lenguaje, ademas de conocer también los Frameworks para cada uno de estos.<br /><h3 style="text-align: left;">Eligiendo el lenguaje adecuado</h3>JavaScript es el mejor aliado de sitios que requieren alta interacción con el usuario: videojuegos, salas de chat, videoconferencias, y toda clase de proyectos en donde la información en tiempo real sea prioridad. JavaScript no tiene limites, hoy en día se puede ejecutar en los sistemas operativos más reconocidos (Linux, Windows y Apple). También es importante resaltar que permite realizar casi toda clase de desarrollos: Aplicaciones móviles, sitios web, APIs, aplicaciones de escritorio, programas de consola, programar Arduino… Para más información ver <a href="https://nodejs.org/" target="_blank">NodeJS</a>.<br /><br />Al igual que JavaScript, CSharp también permite casi realizar toda clase de desarrollos — aunque existen inconvenientes es cuanto a compatibilidad, ya que .NET Core es un proyecto relativamente nuevo y aún faltan elementos por mejorar. CSharp es excelente cuando se dispone de un servidor en MS Windows, de esta manera todas las funciones que ofrece el lenguaje se podrán usar sin ninguna clase de problema. Por otro lado, si lo que necesitas es hacer Debug, C# es el mejor —y… ¿Porque no JavaScript para debug? Porque las funcionalidades del debug dependen mucho del navegador web en el que se esté ejecutando, y muchas veces ese mismo navegador trae complementos instalados que pueden afectar el código fuente y hacer más difícil este proceso.

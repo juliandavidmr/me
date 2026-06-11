@@ -1,0 +1,16 @@
+---
+title: "[Story] La arepa de huevo en la vitrina"
+description: "La arepa de huevo, que no solo tiene huevo, sino también pollo, la vende la vecina del frente. Todos los días saca a la vitrina unas cuantas para vender; también vende papa rellena. La pequeña vitrina, que de pequeña solo tiene el nombre, h"
+pubDate: "2025-01-16T15:27:00.007-05:00"
+updatedDate: "2025-01-16T15:27:40.646-05:00"
+author: "Julian David"
+tags: []
+originalUrl: "https://www.iamjuliand.com/2025/01/story-la-arepa-de-huevo-en-la-vitrina.html"
+bloggerId: "1571807528306220018"
+commentsCount: 0
+images: []
+---
+La arepa de huevo, que no solo tiene huevo, sino también pollo, la vende la vecina del frente. Todos los días saca a la vitrina unas cuantas para vender; también vende papa rellena. La pequeña vitrina, que de pequeña solo tiene el nombre, hace que las arepas de huevo en el segundo piso se colapsen unas sobre otras, al igual que las papas rellenas, haciendo que entren muchas. <br /><br />Las arepas de huevo son diferentes: la masa de maíz amarillo crocante y gruesa, y por dentro, pollo desmechado que se combina con el huevo para hacer un relleno muy sabroso. Se siente la grasa, que aparenta ser reciente y no parecería provenir de los aceites de las arepas de huevo de hace quince días; el pollo junto al huevo hacen una perfecta combinación de sabores. <br /><br />La pequeña vitrina, a diferencia de otras que vienen acompañadas de un pequeño vigilante volador negro, por suerte la vitrina protagonista no cuenta con este diminuto insecto; de lo contrario, nunca se escribiría ninguna historia sobre ella y su contenido. En ocasiones, mientras camino por la calle, veo otras vitrinas que sí cuentan con la presencia de aquellos insectos negros, algunas veces encima de algún pan, otras sobre alguna empanada, y también sobre alguna que otra morcilla negra mientras se ahúma. Por suerte, mi vecina no cuenta con la desagradable compañía de aquel animal de alas redondas, lo que provoca en mí esa sensación de pulcritud, y más cuando la señora que me atiende lleva puesto su delantal blanco y visualmente limpio. <br /><br />Un día más, las arepas de huevo están ausentes de la vitrina. Por alguna razón, es la comida más popular del lugar; no sé por qué se vendería más una arepa de huevo que una papa rellena. Quizás sea una particularidad del sector donde abunda el alcohol; la sequía, el mareo y el hambre de comer algo con grasa y delicioso de aquellos personajes deambulantes nocturnos hace que ruja alguna que otra tripa. <br /><br />La noche se desarrolla; al ojo de buen cubero, habrá unas tres arepas de huevo restantes. No durarán mucho, pues alguna tripa rugiente hará que su huésped vaya, sin dudarlo, a comprar una de esas preparaciones de maíz crujiente.<div><br />
+<hr />
+<p><i>Disponible en <a href="https://www.wattpad.com/story/387857612?utm_source=android&amp;utm_medium=link&amp;utm_content=story_info&amp;wp_page=story_details_button&amp;wp_uname=JulianDavidMoRa*">https://www.wattpad.com/story/387857612?utm_source=android&amp;utm_medium=link&amp;utm_content=story_info&amp;wp_page=story_details_button&amp;wp_uname=JulianDavidMoRa*</a></i></p>
+<!-- notionvc: f4bf02e6-9023-47e4-a431-e6724349d460 --></div>
