@@ -10,7 +10,8 @@
     "clean": "rimraf dist",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.astro .",
     "build-types": "tsc --noEmit --pretty",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "generate-types": "wrangler types"
   },
   "devDependencies": {
     "@astrojs/react": "^5.0.7",
@@ -68,7 +69,8 @@
     },
     "@astrojs/tailwind": {
       "astro": "$astro"
-    }
+    },
+    "vite": "^7"
   },
   "author": "Ixartz (https://github.com/ixartz)"
 }

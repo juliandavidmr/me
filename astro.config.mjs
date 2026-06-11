@@ -4,11 +4,17 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import robotsTxt from 'astro-robots-txt';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
   // base: '.', // Set a path prefix.
-  site: 'https://example.com/', // Use to generate your sitemap and canonical URLs in your final build.
-  trailingSlash: 'always', // Use to always append '/' at end of url
+  // Use to generate your sitemap and canonical URLs in your final build.
+  site: 'https://iamjuliand.com/',
+
+  // Use to always append '/' at end of url
+  trailingSlash: 'always',
+
   markdown: {
     shikiConfig: {
       // Choose from Shiki's built-in themes (or add your own)
@@ -16,5 +22,7 @@ export default defineConfig({
       theme: 'monokai',
     },
   },
+
   integrations: [react(), tailwind({}), sitemap(), robotsTxt()],
+  adapter: cloudflare(),
 });
