@@ -60,5 +60,15 @@
   "volta": {
     "node": "20.18.3"
   },
+  "overrides": {
+    "astro-boilerplate-components": {
+      "astro": "$astro",
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "@astrojs/tailwind": {
+      "astro": "$astro"
+    }
+  },
   "author": "Ixartz (https://github.com/ixartz)"
 }
