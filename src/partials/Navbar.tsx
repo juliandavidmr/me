@@ -14,11 +14,21 @@ const Navbar = ({ active }: NavbarProps) => (
     className={cn(frame, 'flex h-24 items-center justify-between max-sm:h-20')}
   >
     <a
-      className="text-base font-medium tracking-brand no-underline"
+      className="flex items-center gap-2 text-base font-medium tracking-brand no-underline"
       href="/"
       aria-label="Julian David home"
     >
-      <b className="font-medium text-accent">/</b> jd
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcSet="/icon-dark.svg" />
+        <img
+          className="size-8"
+          src="/icon-light.svg"
+          alt=""
+          width="32"
+          height="32"
+        />
+      </picture>
+      <span>jd</span>
     </a>
     <nav
       className="flex items-center gap-14 max-tablet:gap-6 max-sm:gap-3"
