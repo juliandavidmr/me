@@ -4,6 +4,7 @@ import type {
   MarkdownInstance,
 } from 'astro-boilerplate-components';
 
+import Comments from '@/partials/Comments.astro';
 import { Navbar } from '@/partials/Navbar';
 import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
@@ -147,6 +148,8 @@ const prose = cn(
     <article id="article-prose" class={prose} transition:animate="fade">
       <slot />
     </article>
+
+    <Comments />
 
     <footer
       class="mx-auto mt-28 w-[min(57.5rem,calc(100%-3rem))] max-sm:mt-20 max-sm:w-[calc(100%-2.25rem)]"
