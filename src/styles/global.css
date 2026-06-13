@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
 @theme {
@@ -14,7 +14,7 @@
   --color-muted: #6f6a64;
   --color-muted-dark: #9a948c;
 
-  --font-sans: "Geist", "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Geist', 'Geist Sans', ui-sans-serif, system-ui, sans-serif;
 
   --text-2xs: 0.625rem;
   --text-3xs: 0.5625rem;
@@ -45,4 +45,109 @@
   --tracking-tight-copy: -0.03em;
   --tracking-title: -0.035em;
   --tracking-wide-label: 0.1em;
+}
+
+.kinetic-title {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --light-x: 50%;
+  --light-y: 50%;
+  perspective: 52rem;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  transition: transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  margin: 1rem 0 2.5rem;
+  font-size: clamp(4rem, 6.3vw, 6rem);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: -0.072em;
+}
+
+.kinetic-line {
+  position: relative;
+  display: table;
+  isolation: isolate;
+  outline: none;
+  transform-style: preserve-3d;
+  transition:
+    color 110ms ease,
+    filter 160ms ease,
+    text-shadow 160ms ease,
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kinetic-line::before,
+.kinetic-line::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: attr(data-text);
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 110ms ease,
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kinetic-line::before {
+  color: #ff3d81;
+  transform: translate3d(0, 0, -1px);
+}
+
+.kinetic-line::after {
+  color: #22d3ee;
+  transform: translate3d(0, 0, -2px);
+}
+
+.kinetic-line:hover,
+.kinetic-line:focus-visible {
+  color: #ff6b28;
+  filter: drop-shadow(0 1.1rem 1rem rgba(255, 90, 31, 0.12));
+  text-shadow: 0 0 1.6rem rgba(255, 155, 60, 0.2);
+  transform: translate3d(0.045em, -0.035em, 3.25rem) rotateX(-4deg)
+    rotateY(-3deg);
+}
+
+.kinetic-line:hover::before,
+.kinetic-line:focus-visible::before {
+  opacity: 0.8;
+  transform: translate3d(-0.085em, 0.09em, -1.1rem);
+}
+
+.kinetic-line:hover::after,
+.kinetic-line:focus-visible::after {
+  opacity: 0.72;
+  transform: translate3d(0.09em, -0.075em, -2.2rem);
+}
+
+.kinetic-title:has(.kinetic-line:hover) .kinetic-line:not(:hover) {
+  color: color-mix(in srgb, currentColor 62%, transparent);
+  transform: translateZ(-1.4rem);
+}
+
+@media (max-width: 56.25rem) {
+  .kinetic-title {
+    font-size: 3.875rem;
+  }
+}
+
+@media (max-width: 40rem) {
+  .kinetic-title {
+    font-size: clamp(3.125rem, 16vw, 4.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kinetic-title,
+  .kinetic-line,
+  .kinetic-line::before,
+  .kinetic-line::after {
+    transition: none;
+    transform: none;
+  }
+
+  .kinetic-line::before,
+  .kinetic-line::after {
+    display: none;
+  }
 }

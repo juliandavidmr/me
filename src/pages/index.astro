@@ -37,13 +37,28 @@ const headingText =
       )}
     >
       <h1
-        class="my-4 mb-10 text-[clamp(4rem,6.3vw,6rem)] font-medium leading-[.94] tracking-[-.072em] max-tablet:text-[3.875rem] max-sm:text-[clamp(3.125rem,16vw,4.25rem)]"
+        class="kinetic-title"
+        data-kinetic-title
+        aria-label="Julian D. thinks, builds, and writes here."
       >
-        Julian D.<br /><span class="font-normal tracking-[-.085em]"
-          >thinks, builds,</span
-        ><br />and writes<br /><em
-          class="not-italic font-normal tracking-[-.09em]">here</em
-        ><b class="text-[.5em] text-accent">.</b>
+        <span class="kinetic-line" data-text="Julian D." tabindex="0"
+          >Julian D.</span
+        >
+        <span
+          class="kinetic-line font-normal tracking-[-.085em]"
+          data-text="thinks, builds,"
+          tabindex="0">thinks, builds,</span
+        >
+        <span class="kinetic-line" data-text="and writes" tabindex="0"
+          >and writes</span
+        >
+        <span
+          class="kinetic-line font-normal tracking-[-.09em]"
+          data-text="here."
+          tabindex="0"><em class="not-italic">here</em><b
+            class="text-[.5em] text-accent">.</b
+          ></span
+        >
       </h1>
       <div
         class="mx-auto mt-8 w-56 self-center text-xs -tracking-brand text-muted dark:text-muted-dark max-sm:mx-0 max-sm:mt-14 max-sm:w-auto"
@@ -191,3 +206,30 @@ const headingText =
 
   <Footer />
 </Base>
+
+<script>
+  const titles = document.querySelectorAll<HTMLElement>('[data-kinetic-title]');
+
+  titles.forEach((title) => {
+    const updateTilt = (event: PointerEvent) => {
+      const rect = title.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+      title.style.setProperty('--tilt-x', `${y * -8}deg`);
+      title.style.setProperty('--tilt-y', `${x * 10}deg`);
+      title.style.setProperty('--light-x', `${(x + 0.5) * 100}%`);
+      title.style.setProperty('--light-y', `${(y + 0.5) * 100}%`);
+    };
+
+    const resetTilt = () => {
+      title.style.removeProperty('--tilt-x');
+      title.style.removeProperty('--tilt-y');
+      title.style.removeProperty('--light-x');
+      title.style.removeProperty('--light-y');
+    };
+
+    title.addEventListener('pointermove', updateTilt);
+    title.addEventListener('pointerleave', resetTilt);
+  });
+</script>
