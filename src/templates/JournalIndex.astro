@@ -1,4 +1,5 @@
 ---
+import { frame, Navbar } from '@/partials/Navbar';
 import Base from '@/templates/Base.astro';
 import { cn } from '@/utils/cn';
 
@@ -10,59 +11,40 @@ interface Props {
 }
 
 const { eyebrow, title, description, items } = Astro.props as Props;
-const frame =
-  'ml-[max(8.4375rem,calc((100%-72.5rem)/2+4.25rem))] w-[min(72.5rem,calc(100%-11.875rem))] max-[56.25rem]:ml-[3.75rem] max-[56.25rem]:w-[calc(100%-5rem)] max-sm:mx-[1.125rem] max-sm:w-[calc(100%-2.25rem)]';
-const navLink =
-  'relative py-2 text-[.5625rem] font-semibold uppercase tracking-[.18em] after:absolute after:inset-x-0 after:bottom-0 after:h-[0.0625rem] after:origin-center after:scale-x-0 after:bg-[#ff5a1f] after:transition-transform hover:after:scale-x-[.45] max-sm:text-[.5rem] max-sm:tracking-[.1em]';
+let active: 'projects' | 'about' | undefined;
+if (eyebrow === 'Projects') active = 'projects';
+if (eyebrow === 'About') active = 'about';
 ---
 
 <Base head={{ title: `${title} — Julian David`, description }}>
-  <header
-    class={cn(frame, 'flex h-24 items-center justify-between max-sm:h-20')}
-  >
-    <a class="text-base font-medium tracking-[-.04em] no-underline" href="/">
-      <b class="font-medium text-[#ff5a1f]">/</b> jd
-    </a>
-    <nav
-      class="flex items-center gap-14 max-[56.25rem]:gap-6 max-sm:gap-3"
-      aria-label="Primary navigation"
-    >
-      <a class={navLink} href="/posts/">Writing</a><a
-        class={navLink}
-        href="/projects/">Projects</a
-      ><a class={navLink} href="/notes/">Notes</a><a
-        class={navLink}
-        href="/about/">About</a
-      >
-    </nav>
-  </header>
+  <Navbar active={active} />
   <main class={cn(frame, 'min-h-[calc(100vh-6rem)] py-24 max-sm:pt-16')}>
-    <p class="text-[.625rem] font-semibold uppercase tracking-[.2em]">
+    <p class="text-2xs font-semibold uppercase tracking-[.2em]">
       {eyebrow}
-      <b class="text-[#ff5a1f]">/</b>
+      <b class="text-accent">/</b>
     </p>
     <h1
-      class="my-8 mb-5 max-w-3xl text-[clamp(3.625rem,7vw,6.375rem)] font-medium leading-[.96] tracking-[-.075em]"
+      class="my-8 mb-5 max-w-3xl text-[clamp(3.625rem,7vw,6.375rem)] font-medium leading-display tracking-display"
     >
-      <span>{title}</span><i class="not-italic text-[#ff5a1f]">.</i>
+      <span>{title}</span><i class="not-italic text-accent">.</i>
     </h1>
-    <p class="mb-20 max-w-lg text-xs text-[#6f6a64] dark:text-[#9a948c]">
+    <p class="mb-20 max-w-lg text-xs text-muted dark:text-muted-dark">
       {description}
     </p>
-    <div class="border-t border-[#dedbd2] dark:border-[#2a2926]">
+    <div class="border-t border-line dark:border-line-dark">
       {
         items.map((item) => (
           <a
-            class="group grid min-h-20 grid-cols-[8.125rem_1fr_12.5rem_1.25rem] items-center border-b border-[#dedbd2] no-underline transition-colors hover:bg-[#ff5a1f]/[.025] dark:border-[#2a2926] max-sm:grid-cols-[1fr_1.25rem] max-sm:gap-2 max-sm:py-4"
+            class="group grid min-h-20 grid-cols-[8.125rem_1fr_12.5rem_1.25rem] items-center border-b border-line no-underline transition-colors hover:bg-accent/2.5 dark:border-line-dark max-sm:grid-cols-[1fr_1.25rem] max-sm:gap-2 max-sm:py-4"
             href={item.href || '/'}
           >
-            <time class="text-[.5625rem] uppercase tracking-[.08em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:text-[#9a948c]">
+            <time class="text-3xs uppercase tracking-label text-muted [font-variant-numeric:tabular-nums] dark:text-muted-dark">
               {item.date}
             </time>
             <strong class="text-base font-medium transition-transform group-hover:translate-x-1 max-sm:col-start-1 max-sm:text-base">
               {item.title}
             </strong>
-            <span class="text-[.5625rem] uppercase tracking-[.08em] text-[#6f6a64] dark:text-[#9a948c] max-sm:col-start-1">
+            <span class="text-3xs uppercase tracking-label text-muted dark:text-muted-dark max-sm:col-start-1">
               {item.meta}
             </span>
             <b class="font-normal max-sm:col-start-2 max-sm:row-span-3 max-sm:row-start-1">
@@ -73,7 +55,7 @@ const navLink =
       }
     </div>
     <a
-      class="mt-12 inline-block text-[.5625rem] uppercase tracking-[.12em] text-[#6f6a64] no-underline dark:text-[#9a948c]"
+      class="mt-12 inline-block text-3xs uppercase tracking-[.12em] text-muted no-underline dark:text-muted-dark"
       href="/">← Return to journal</a
     >
   </main>

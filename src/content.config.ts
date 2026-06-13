@@ -19,12 +19,4 @@ export const collections = {
     loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/writing' }),
     schema: journalSchema,
   }),
-  projects: defineCollection({
-    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
-    schema: journalSchema,
-  }),
-  notes: defineCollection({
-    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/notes' }),
-    schema: journalSchema,
-  }),
 };

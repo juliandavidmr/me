@@ -1,2 +1,48 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+@theme {
+  --breakpoint-tablet: 56.25rem;
+
+  --color-accent: #ff5a1f;
+  --color-canvas: #f7f5f0;
+  --color-canvas-dark: #0b0b0b;
+  --color-ink: #0d0d0d;
+  --color-ink-dark: #f4f1ea;
+  --color-line: #dedbd2;
+  --color-line-dark: #2a2926;
+  --color-muted: #6f6a64;
+  --color-muted-dark: #9a948c;
+
+  --font-sans: "Geist", "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --text-2xs: 0.625rem;
+  --text-3xs: 0.5625rem;
+  --text-4xs: 0.5rem;
+  --text-article: 1.1875rem;
+  --text-card-title: 2.3125rem;
+  --text-prose-h1: 3.625rem;
+  --text-prose-h2: 2.625rem;
+  --text-prose-h2-mobile: 2.125rem;
+  --text-prose-h3: 1.8125rem;
+  --text-prose-h3-mobile: 1.5625rem;
+  --text-prose-h4: 1.3125rem;
+
+  --leading-compact: 1.25;
+  --leading-copy: 1.65;
+  --leading-display: 0.96;
+  --leading-prose: 1.82;
+  --leading-prose-mobile: 1.8;
+  --leading-relaxed-copy: 1.7;
+  --leading-snug-copy: 1.15;
+
+  --tracking-brand: -0.04em;
+  --tracking-card-title: -0.06em;
+  --tracking-display: -0.075em;
+  --tracking-heading: -0.055em;
+  --tracking-label: 0.08em;
+  --tracking-nav: 0.18em;
+  --tracking-tight-copy: -0.03em;
+  --tracking-title: -0.035em;
+  --tracking-wide-label: 0.1em;
+}

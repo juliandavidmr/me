@@ -1,26 +1,21 @@
 ---
 import type { FrontmatterPage } from 'astro-boilerplate-components';
-import {
-  BlogGallery,
-  NewerOlderPagination,
-  PaginationHeader,
-  Section,
-} from 'astro-boilerplate-components';
 
-import { CTA } from '@/partials/CTA';
+import { frame, Navbar } from '@/partials/Navbar';
 import Base from '@/templates/Base.astro';
-import { AppConfig } from '@/utils/AppConfig';
+import { cn } from '@/utils/cn';
 import { sortByDate } from '@/utils/Posts';
 
 type GetStaticPaths = {
   paginate: any;
-}; // Overrides `GetStaticPathsOptions` types from Astro
+};
 
 export async function getStaticPaths({ paginate }: GetStaticPaths) {
-  const allPosts = Object.values(import.meta.glob('./**/*.md', { eager: true }));
+  const allPosts = Object.values(
+    import.meta.glob('./**/*.md', { eager: true }),
+  );
   const sortedPosts = sortByDate(allPosts);
 
-  // Return a paginated collection of paths for all posts
   return paginate(sortedPosts, { pageSize: 6 });
 }
 
@@ -29,28 +24,104 @@ interface Props {
 }
 
 const { page } = Astro.props as Props;
-const titleSuffix = ` - ${AppConfig.site_name}`;
-const titleBase = `Blog page ${page.currentPage}`;
-const title = titleBase + titleSuffix;
+const title =
+  page.currentPage === 1
+    ? 'Writing — Julian David'
+    : `Writing, page ${page.currentPage} — Julian David`;
 const description =
-  'Pagination example built with Astro styled with Tailwind CSS.';
+  'Essays, technical notes, stories, and experiments by Julian David.';
+
+const formatDate = (date: string | Date) =>
+  new Intl.DateTimeFormat('en', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+  }).format(new Date(date));
 ---
 
 <Base head={{ title, description }}>
-  <Section>
-    <PaginationHeader
-      title='Random title here'
-      description='Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-    />
-  </Section>
+  <Navbar active="writing" />
 
-  <Section>
-    <BlogGallery postList={page.data} />
-  </Section>
+  <main class={cn(frame, 'min-h-screen py-24 max-sm:pt-16')}>
+    <p class="text-2xs font-semibold uppercase tracking-[.2em]">
+      Writing <b class="text-accent">/</b>
+    </p>
+    <h1
+      class="my-8 max-w-3xl text-[clamp(3.625rem,7vw,6.375rem)] font-medium leading-display tracking-display"
+    >
+      Ideas made<br />explicit<span class="text-accent">.</span>
+    </h1>
+    <p class="mb-20 max-w-lg text-xs text-muted dark:text-muted-dark">
+      Essays, technical notes, stories, and experiments collected over time.
+    </p>
 
-  <Section>
-    <NewerOlderPagination page={page} />
-  </Section>
+    <div class="border-t border-line dark:border-line-dark">
+      {
+        page.data.map((post) => (
+          <a
+            class="group grid gap-3 border-b border-line py-8 no-underline transition-colors hover:bg-accent/2.5 dark:border-line-dark sm:grid-cols-6 sm:items-center sm:gap-8"
+            href={post.url.replace(/^\/posts/, '')}
+          >
+            <time class="text-3xs uppercase tracking-label text-muted dark:text-muted-dark">
+              {formatDate(post.frontmatter.pubDate)}
+            </time>
+            <div class="sm:col-span-4">
+              <h2 class="text-xl font-medium tracking-title transition-transform group-hover:translate-x-1 sm:text-2xl">
+                {post.frontmatter.title.trim()}
+              </h2>
+              <p class="mt-2 max-w-2xl text-xs leading-copy text-muted dark:text-muted-dark">
+                {post.frontmatter.description}
+              </p>
+            </div>
+            <div class="flex items-center justify-between gap-4 sm:justify-end">
+              <span class="text-3xs uppercase tracking-label text-muted dark:text-muted-dark">
+                {post.frontmatter.tags?.slice(0, 2).join(', ') || 'Journal'}
+              </span>
+              <span aria-hidden="true">→</span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
 
-  <CTA />
+    <nav
+      class="mt-12 flex items-center justify-between text-3xs font-semibold uppercase tracking-nav"
+      aria-label="Pagination"
+    >
+      {
+        page.url.prev ? (
+          <a
+            class="no-underline transition-colors hover:text-accent"
+            href={page.url.prev}
+          >
+            ← Newer
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      <span class="text-muted dark:text-muted-dark">
+        {page.currentPage} / {page.lastPage}
+      </span>
+      {
+        page.url.next ? (
+          <a
+            class="no-underline transition-colors hover:text-accent"
+            href={page.url.next}
+          >
+            Older →
+          </a>
+        ) : (
+          <span />
+        )
+      }
+    </nav>
+
+    <a
+      class="mt-20 inline-block text-3xs uppercase tracking-nav text-muted no-underline transition-colors hover:text-accent dark:text-muted-dark"
+      href="/"
+    >
+      ← Return to journal
+    </a>
+  </main>
 </Base>

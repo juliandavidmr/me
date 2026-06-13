@@ -4,6 +4,7 @@ import type {
   MarkdownInstance,
 } from 'astro-boilerplate-components';
 
+import { Navbar } from '@/partials/Navbar';
 import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
 import { cn } from '@/utils/cn';
@@ -54,10 +55,6 @@ const formatDate = (date: string | Date) =>
     .replaceAll('-', '.');
 const publicPostUrl = (post?: MarkdownInstance<IFrontmatter>) =>
   post?.url?.replace(/^\/posts/, '') || '/posts/';
-const frame =
-  'ml-[max(8.4375rem,calc((100%-72.5rem)/2+4.25rem))] w-[min(72.5rem,calc(100%-11.875rem))] max-[56.25rem]:ml-[3.75rem] max-[56.25rem]:w-[calc(100%-5rem)] max-sm:mx-[1.125rem] max-sm:w-[calc(100%-2.25rem)]';
-const navLink =
-  'relative py-2 text-[.5625rem] font-semibold uppercase tracking-[.18em] after:absolute after:inset-x-0 after:bottom-0 after:h-[0.0625rem] after:origin-center after:scale-x-0 after:bg-[#ff5a1f] after:transition-transform hover:after:scale-x-[.45] max-sm:text-[.5rem] max-sm:tracking-[.1em]';
 const heroWidths = {
   normal: 'w-[min(40rem,calc(100%-3rem))] max-sm:w-[calc(100%-2.25rem)]',
   wide: 'w-[min(57.5rem,calc(100%-3rem))] max-sm:w-[calc(100%-2.25rem)]',
@@ -66,58 +63,37 @@ const heroWidths = {
   screen: 'w-full [&_img]:h-[calc(100vh-5.5rem)] [&_img]:max-h-none',
 };
 const prose = cn(
-  'prose prose-neutral dark:prose-invert mx-auto w-[min(40rem,calc(100%-3rem))] max-w-none text-[1.1875rem] leading-[1.82] tracking-[-.012em] max-sm:w-[calc(100%-2.25rem)] max-sm:text-base max-sm:leading-[1.8]',
+  'prose prose-neutral dark:prose-invert mx-auto w-[min(40rem,calc(100%-3rem))] max-w-none text-article leading-prose tracking-[-.012em] max-sm:w-[calc(100%-2.25rem)] max-sm:text-base max-sm:leading-prose-mobile',
   '[&_p]:mb-[1.6em] [&_p]:mt-0 [&_p]:!font-sans [&_p]:!text-inherit [&_p]:!text-[inherit] [&_p]:!leading-[inherit]',
-  '[&_div]:!font-sans [&_div]:!text-inherit [&_span]:!font-sans [&_span]:!text-inherit [&_a]:!font-sans [&_a]:!text-inherit [&_a]:underline [&_a]:decoration-[#ff5a1f]/60 [&_a]:underline-offset-[.18em] hover:[&_a]:!text-[#ff5a1f]',
-  '[&_h1]:mt-[2.2em] [&_h1]:mb-[.65em] [&_h1]:scroll-mt-[4.375rem] [&_h1]:font-sans [&_h1]:text-[3.625rem] [&_h1]:font-medium [&_h1]:leading-none [&_h1]:tracking-[-.055em] max-sm:[&_h1]:text-[2.625rem]',
-  '[&_h2]:mt-[3.3em] [&_h2]:mb-[.8em] [&_h2]:border-t [&_h2]:border-[#dedbd2] [&_h2]:pt-[1.5625rem] [&_h2]:font-sans [&_h2]:text-[2.625rem] [&_h2]:font-medium [&_h2]:leading-[1.06] [&_h2]:tracking-[-.055em] dark:[&_h2]:border-[#2a2926] max-sm:[&_h2]:text-[2.125rem]',
-  '[&_h3]:mt-[2.8em] [&_h3]:mb-[.7em] [&_h3]:font-sans [&_h3]:text-[1.8125rem] [&_h3]:font-medium [&_h3]:leading-[1.12] [&_h3]:tracking-[-.055em] max-sm:[&_h3]:text-[1.5625rem]',
-  '[&_h4]:mt-[2.5em] [&_h4]:mb-[.7em] [&_h4]:font-sans [&_h4]:text-[1.3125rem] [&_h4]:font-medium [&_h4]:tracking-[-.03em]',
-  '[&_strong]:!font-sans [&_strong]:font-semibold [&_b]:!font-sans [&_b]:font-semibold [&_li]:!font-sans [&_li]:!text-inherit [&_li]:my-[.55em] [&_li]:pl-[.45em] marker:[&_li]:text-[#ff5a1f]',
+  '[&_div]:!font-sans [&_div]:!text-inherit [&_span]:!font-sans [&_span]:!text-inherit [&_a]:!font-sans [&_a]:!text-inherit [&_a]:underline [&_a]:decoration-accent/60 [&_a]:underline-offset-[.18em] hover:[&_a]:!text-accent',
+  '[&_h1]:mt-[2.2em] [&_h1]:mb-[.65em] [&_h1]:scroll-mt-17.5 [&_h1]:font-sans [&_h1]:text-prose-h1 [&_h1]:font-medium [&_h1]:leading-none [&_h1]:tracking-heading max-sm:[&_h1]:text-prose-h2',
+  '[&_h2]:mt-[3.3em] [&_h2]:mb-[.8em] [&_h2]:border-t [&_h2]:border-line [&_h2]:pt-6.25 [&_h2]:font-sans [&_h2]:text-prose-h2 [&_h2]:font-medium [&_h2]:leading-[1.06] [&_h2]:tracking-heading dark:[&_h2]:border-line-dark max-sm:[&_h2]:text-prose-h2-mobile',
+  '[&_h3]:mt-[2.8em] [&_h3]:mb-[.7em] [&_h3]:font-sans [&_h3]:text-prose-h3 [&_h3]:font-medium [&_h3]:leading-[1.12] [&_h3]:tracking-heading max-sm:[&_h3]:text-prose-h3-mobile',
+  '[&_h4]:mt-[2.5em] [&_h4]:mb-[.7em] [&_h4]:font-sans [&_h4]:text-prose-h4 [&_h4]:font-medium [&_h4]:tracking-tight-copy',
+  '[&_strong]:!font-sans [&_strong]:font-semibold [&_b]:!font-sans [&_b]:font-semibold [&_li]:!font-sans [&_li]:!text-inherit [&_li]:my-[.55em] [&_li]:pl-[.45em] marker:[&_li]:text-accent',
   '[&_ul]:my-[1.8em] [&_ul]:mb-[2.2em] [&_ul]:pl-[1.25em] [&_ol]:my-[1.8em] [&_ol]:mb-[2.2em] [&_ol]:pl-[1.25em]',
-  '[&_hr]:mx-auto [&_hr]:my-[5.3125rem] [&_hr]:h-[0.0625rem] [&_hr]:w-[2.375rem] [&_hr]:border-0 [&_hr]:bg-[#ff5a1f]',
-  '[&_blockquote]:relative [&_blockquote]:left-1/2 [&_blockquote]:my-[2.5em] [&_blockquote]:mb-[2.7em] [&_blockquote]:w-[min(48.75rem,calc(100vw-3rem))] [&_blockquote]:-translate-x-1/2 [&_blockquote]:border-l [&_blockquote]:border-[#ff5a1f] [&_blockquote]:py-3 [&_blockquote]:pl-[2.125rem] [&_blockquote]:font-sans [&_blockquote]:text-[clamp(1.75rem,3.3vw,2.75rem)] [&_blockquote]:font-medium [&_blockquote]:not-italic [&_blockquote]:leading-[1.2] [&_blockquote]:tracking-[-.055em] max-sm:[&_blockquote]:w-[calc(100vw-2.25rem)] max-sm:[&_blockquote]:pl-5 max-sm:[&_blockquote]:text-[1.6875rem]',
-  '[&_img]:h-auto [&_img]:max-w-full [&_video]:h-auto [&_video]:max-w-full [&_svg]:h-auto [&_svg]:max-w-full [&_.separator]:my-[3.4375rem] [&_.separator]:text-center [&_.separator_a]:!m-0 [&_.separator_a]:block [&_.separator_img]:!h-auto [&_.separator_img]:!w-auto [&_.separator_img]:max-w-full',
-  '[&_pre]:relative [&_pre]:left-1/2 [&_pre]:my-[2.375rem] [&_pre]:w-[min(57.5rem,calc(100vw-3rem))] [&_pre]:max-w-none [&_pre]:-translate-x-1/2 [&_pre]:overflow-x-auto [&_pre]:border [&_pre]:border-[#dedbd2] [&_pre]:bg-white/70 [&_pre]:px-6 [&_pre]:py-[1.375rem] [&_pre]:text-xs [&_pre]:leading-[1.65] [&_pre]:shadow-none dark:[&_pre]:border-[#2a2926] dark:[&_pre]:bg-[#111]/70 max-sm:[&_pre]:w-[calc(100vw-1.125rem)]',
-  '[&_pre_*]:!bg-transparent [&_pre_*]:!font-mono [&_pre_*]:!text-[inherit] [&_pre_*]:!leading-[inherit] [&_:not(pre)>code]:border [&_:not(pre)>code]:border-[#dedbd2] [&_:not(pre)>code]:bg-white/60 [&_:not(pre)>code]:px-[.35em] [&_:not(pre)>code]:py-[.16em] [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[.78em] dark:[&_:not(pre)>code]:border-[#2a2926] dark:[&_:not(pre)>code]:bg-[#111]/60',
-  '[&_table]:relative [&_table]:left-1/2 [&_table]:my-[2.8125rem] [&_table]:w-[min(57.5rem,calc(100vw-3rem))] [&_table]:max-w-none [&_table]:-translate-x-1/2 [&_table]:border-collapse [&_table]:border [&_table]:border-[#dedbd2] [&_table]:text-xs [&_table]:shadow-none dark:[&_table]:border-[#2a2926] max-sm:[&_table]:w-[calc(100vw-1.125rem)] [&_th]:border [&_th]:border-[#dedbd2] [&_th]:bg-white/60 [&_th]:p-3 [&_th]:text-left [&_th]:font-semibold dark:[&_th]:border-[#2a2926] dark:[&_th]:bg-[#111]/60 [&_td]:border [&_td]:border-[#dedbd2] [&_td]:p-3 dark:[&_td]:border-[#2a2926]',
-  '[&_sup]:text-[.65em] [&_sup]:text-[#ff5a1f] [&_.footnotes]:mt-20 [&_.footnotes]:border-t [&_.footnotes]:border-[#dedbd2] [&_.footnotes]:pt-7 [&_.footnotes]:text-xs [&_.footnotes]:leading-[1.65] [&_.footnotes]:text-[#6f6a64] dark:[&_.footnotes]:border-[#2a2926] dark:[&_.footnotes]:text-[#9a948c]',
+  '[&_hr]:mx-auto [&_hr]:my-21.25 [&_hr]:h-px [&_hr]:w-9.5 [&_hr]:border-0 [&_hr]:bg-accent',
+  '[&_blockquote]:relative [&_blockquote]:left-1/2 [&_blockquote]:my-[2.5em] [&_blockquote]:mb-[2.7em] [&_blockquote]:w-[min(48.75rem,calc(100vw-3rem))] [&_blockquote]:-translate-x-1/2 [&_blockquote]:border-l [&_blockquote]:border-accent [&_blockquote]:py-3 [&_blockquote]:pl-8.5 [&_blockquote]:font-sans [&_blockquote]:text-[clamp(1.75rem,3.3vw,2.75rem)] [&_blockquote]:font-medium [&_blockquote]:not-italic [&_blockquote]:leading-[1.2] [&_blockquote]:tracking-heading max-sm:[&_blockquote]:w-[calc(100vw-2.25rem)] max-sm:[&_blockquote]:pl-5 max-sm:[&_blockquote]:text-[1.6875rem]',
+  '[&_img]:h-auto [&_img]:max-w-full [&_video]:h-auto [&_video]:max-w-full [&_svg]:h-auto [&_svg]:max-w-full [&_.separator]:my-13.75 [&_.separator]:text-center [&_.separator_a]:!m-0 [&_.separator_a]:block [&_.separator_img]:!h-auto [&_.separator_img]:!w-auto [&_.separator_img]:max-w-full',
+  '[&_pre]:relative [&_pre]:left-1/2 [&_pre]:my-9.5 [&_pre]:w-[min(57.5rem,calc(100vw-3rem))] [&_pre]:max-w-none [&_pre]:-translate-x-1/2 [&_pre]:overflow-x-auto [&_pre]:border [&_pre]:border-line [&_pre]:bg-white/70 [&_pre]:px-6 [&_pre]:py-5.5 [&_pre]:text-xs [&_pre]:leading-copy [&_pre]:shadow-none dark:[&_pre]:border-line-dark dark:[&_pre]:bg-neutral-950/70 max-sm:[&_pre]:w-[calc(100vw-1.125rem)]',
+  '[&_pre_*]:!bg-transparent [&_pre_*]:!font-mono [&_pre_*]:!text-[inherit] [&_pre_*]:!leading-[inherit] [&_:not(pre)>code]:border [&_:not(pre)>code]:border-line [&_:not(pre)>code]:bg-white/60 [&_:not(pre)>code]:px-[.35em] [&_:not(pre)>code]:py-[.16em] [&_:not(pre)>code]:font-mono [&_:not(pre)>code]:text-[.78em] dark:[&_:not(pre)>code]:border-line-dark dark:[&_:not(pre)>code]:bg-neutral-950/60',
+  '[&_table]:relative [&_table]:left-1/2 [&_table]:my-11.25 [&_table]:w-[min(57.5rem,calc(100vw-3rem))] [&_table]:max-w-none [&_table]:-translate-x-1/2 [&_table]:border-collapse [&_table]:border [&_table]:border-line [&_table]:text-xs [&_table]:shadow-none dark:[&_table]:border-line-dark max-sm:[&_table]:w-[calc(100vw-1.125rem)] [&_th]:border [&_th]:border-line [&_th]:bg-white/60 [&_th]:p-3 [&_th]:text-left [&_th]:font-semibold dark:[&_th]:border-line-dark dark:[&_th]:bg-neutral-950/60 [&_td]:border [&_td]:border-line [&_td]:p-3 dark:[&_td]:border-line-dark',
+  '[&_sup]:text-[.65em] [&_sup]:text-accent [&_.footnotes]:mt-20 [&_.footnotes]:border-t [&_.footnotes]:border-line [&_.footnotes]:pt-7 [&_.footnotes]:text-xs [&_.footnotes]:leading-copy [&_.footnotes]:text-muted dark:[&_.footnotes]:border-line-dark dark:[&_.footnotes]:text-muted-dark',
 );
 ---
 
 <Base head={{ title, description: content.description }}>
-  <header
-    class={cn(frame, 'flex h-24 items-center justify-between max-sm:h-20')}
-  >
-    <a
-      class="text-base font-medium tracking-[-.04em] no-underline"
-      href="/"
-      aria-label="Julian David home"
-      ><b class="font-medium text-[#ff5a1f]">/</b> jd</a
-    >
-    <nav
-      class="flex items-center gap-14 max-[56.25rem]:gap-6 max-sm:gap-3"
-      aria-label="Primary navigation"
-    >
-      <a class={cn(navLink, 'after:scale-x-[.45]')} href="/posts/">Writing</a><a
-        class={navLink}
-        href="/projects/">Projects</a
-      ><a class={navLink} href="/notes/">Notes</a><a
-        class={navLink}
-        href="/about/">About</a
-      >
-    </nav>
-  </header>
+  <Navbar active="writing" />
 
   <aside
-    class="fixed left-[max(1.625rem,calc((100vw-72.5rem)/2-3.5rem))] top-[34vh] z-[3] flex h-[14.375rem] w-6 flex-col items-center gap-5 text-[.5rem] tracking-[.08em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:text-[#9a948c] max-[56.25rem]:hidden"
+    class="fixed left-[max(1.625rem,calc((100vw-72.5rem)/2-3.5rem))] top-[34vh] z-3 flex h-57.5 w-6 flex-col items-center gap-5 text-4xs tracking-label text-muted [font-variant-numeric:tabular-nums] dark:text-muted-dark max-tablet:hidden"
     aria-label="Reading progress"
   >
     <span>01</span><div
-      class="relative w-[0.0625rem] flex-1 overflow-hidden bg-[#dedbd2] dark:bg-[#2a2926]"
+      class="relative w-px flex-1 overflow-hidden bg-line dark:bg-line-dark"
     >
       <i
-        class="absolute inset-0 origin-top scale-y-0 bg-[#ff5a1f] transition-transform duration-100"
+        class="absolute inset-0 origin-top scale-y-0 bg-accent transition-transform duration-100"
         data-reading-progress></i>
     </div><span>02</span><span>03</span>
   </aside>
@@ -127,17 +103,17 @@ const prose = cn(
       class="mx-auto mb-24 w-[min(57.5rem,calc(100%-3rem))] max-sm:mb-16 max-sm:w-[calc(100%-2.25rem)]"
     >
       <a
-        class="mb-12 inline-block text-[.5625rem] font-semibold uppercase tracking-[.18em] text-[#6f6a64] no-underline dark:text-[#9a948c] max-sm:mb-8"
-        href="/posts/">Writing <b class="text-[#ff5a1f]">/</b> Journal entry</a
+        class="mb-12 inline-block text-3xs font-semibold uppercase tracking-nav text-muted no-underline dark:text-muted-dark max-sm:mb-8"
+        href="/posts/">Writing <b class="text-accent">/</b> Journal entry</a
       >
       <h1
-        class="m-0 max-w-4xl text-[clamp(4.375rem,8.1vw,7.625rem)] font-medium leading-[.92] tracking-[-.075em] text-balance max-sm:text-[clamp(3rem,15vw,4.25rem)] max-sm:leading-[.96]"
+        class="m-0 max-w-4xl text-[clamp(4.375rem,8.1vw,7.625rem)] font-medium leading-[.92] tracking-display text-balance max-sm:text-[clamp(3rem,15vw,4.25rem)] max-sm:leading-display"
         transition:name="article-title"
       >
-        {articleTitle}<i class="not-italic text-[#ff5a1f]">.</i>
+        {articleTitle}<i class="not-italic text-accent">.</i>
       </h1>
       <div
-        class="mt-12 flex flex-wrap gap-x-[2.125rem] gap-y-[.875rem] border-t border-[#dedbd2] pt-[1.125rem] text-[.5625rem] uppercase tracking-[.1em] text-[#6f6a64] [font-variant-numeric:tabular-nums] dark:border-[#2a2926] dark:text-[#9a948c] max-sm:mt-[1.875rem] max-sm:grid max-sm:gap-2"
+        class="mt-12 flex flex-wrap gap-x-8.5 gap-y-3.5 border-t border-line pt-4.5 text-3xs uppercase tracking-wide-label text-muted [font-variant-numeric:tabular-nums] dark:border-line-dark dark:text-muted-dark max-sm:mt-7.5 max-sm:grid max-sm:gap-2"
       >
         <span>Updated {formatDate(updated)}</span><span>{author}</span><span
           >{content.tags?.join(' · ') || 'Journal'}</span
@@ -160,7 +136,7 @@ const prose = cn(
             alt={content.imgAlt || ''}
           />
           {content.imgAlt && (
-            <figcaption class="mt-[.625rem] text-[.5625rem] tracking-[.04em] text-[#6f6a64] dark:text-[#9a948c]">
+            <figcaption class="mt-2.5 text-3xs tracking-[.04em] text-muted dark:text-muted-dark">
               {content.imgAlt}
             </figcaption>
           )}
@@ -175,21 +151,21 @@ const prose = cn(
     <footer
       class="mx-auto mt-28 w-[min(57.5rem,calc(100%-3rem))] max-sm:mt-20 max-sm:w-[calc(100%-2.25rem)]"
     >
-      <div class="relative h-[0.0625rem] bg-[#dedbd2] dark:bg-[#2a2926]">
-        <i class="absolute -top-0.5 left-0 size-1.5 bg-[#ff5a1f]"></i>
+      <div class="relative h-px bg-line dark:bg-line-dark">
+        <i class="absolute -top-0.5 left-0 size-1.5 bg-accent"></i>
       </div>
       <div
-        class="grid grid-cols-3 gap-8 py-[1.875rem] pb-[4.0625rem] text-[.625rem] leading-[1.7] text-[#6f6a64] dark:text-[#9a948c] max-sm:block max-sm:pb-[2.375rem] [&_p]:m-0 max-sm:[&_p]:my-2 [&_strong]:font-medium [&_strong]:text-[#0d0d0d] dark:[&_strong]:text-[#f4f1ea] [&_span]:font-medium [&_span]:text-[#0d0d0d] dark:[&_span]:text-[#f4f1ea]"
+        class="grid grid-cols-3 gap-8 py-7.5 pb-16.25 text-2xs leading-relaxed-copy text-muted dark:text-muted-dark max-sm:block max-sm:pb-9.5 [&_p]:m-0 max-sm:[&_p]:my-2 [&_strong]:font-medium [&_strong]:text-ink dark:[&_strong]:text-ink-dark [&_span]:font-medium [&_span]:text-ink dark:[&_span]:text-ink-dark"
       >
         <p>Written by <strong>{author}</strong></p><p>
           Last updated <time
-            class="font-medium text-[#0d0d0d] [font-variant-numeric:tabular-nums] dark:text-[#f4f1ea]"
+            class="font-medium text-ink [font-variant-numeric:tabular-nums] dark:text-ink-dark"
             >{formatDate(updated)}</time
           >
         </p><p>Tags: <span>{content.tags?.join(' · ') || 'Journal'}</span></p>
       </div>
       <nav
-        class="grid grid-cols-2 border-y border-[#dedbd2] dark:border-[#2a2926] max-sm:block"
+        class="grid grid-cols-2 border-y border-line dark:border-line-dark max-sm:block"
         aria-label="Article navigation"
       >
         {
@@ -199,10 +175,10 @@ const prose = cn(
               href={publicPostUrl(olderPost)}
             >
               <>
-                <span class="text-[.5rem] uppercase tracking-[.14em] text-[#6f6a64] dark:text-[#9a948c]">
+                <span class="text-4xs uppercase tracking-[.14em] text-muted dark:text-muted-dark">
                   Previous article ←
                 </span>
-                <strong class="text-base font-medium leading-[1.25] tracking-[-.035em] transition-transform group-hover:translate-x-1">
+                <strong class="text-base font-medium leading-compact tracking-title transition-transform group-hover:translate-x-1">
                   {olderPost.frontmatter.title.trim()}
                 </strong>
               </>
@@ -214,14 +190,14 @@ const prose = cn(
         {
           newerPost ? (
             <a
-              class="group flex min-h-32 flex-col justify-between border-l border-[#dedbd2] py-7 pl-[2.1875rem] text-right no-underline dark:border-[#2a2926] max-sm:min-h-28 max-sm:border-l-0 max-sm:border-t max-sm:pl-0 max-sm:text-left"
+              class="group flex min-h-32 flex-col justify-between border-l border-line py-7 pl-8.75 text-right no-underline dark:border-line-dark max-sm:min-h-28 max-sm:border-l-0 max-sm:border-t max-sm:pl-0 max-sm:text-left"
               href={publicPostUrl(newerPost)}
             >
               <>
-                <span class="text-[.5rem] uppercase tracking-[.14em] text-[#6f6a64] dark:text-[#9a948c]">
+                <span class="text-4xs uppercase tracking-[.14em] text-muted dark:text-muted-dark">
                   Next article →
                 </span>
-                <strong class="text-base font-medium leading-[1.25] tracking-[-.035em] transition-transform group-hover:-translate-x-1 max-sm:group-hover:translate-x-1">
+                <strong class="text-base font-medium leading-compact tracking-title transition-transform group-hover:-translate-x-1 max-sm:group-hover:translate-x-1">
                   {newerPost.frontmatter.title.trim()}
                 </strong>
               </>

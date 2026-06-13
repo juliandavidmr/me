@@ -10,7 +10,7 @@ images: ["/assets/journal/estampapaya.png"]
 
 # EstampaPaya
 
-Durante años vi el mismo problema repetirse en talleres de estampado y personalización: los clientes tienen una idea en la cabeza, pero explicarla correctamente es difícil.
+Durante años vi cómo se repetía el mismo problema en los talleres de estampado y personalización: los clientes tienen una idea en la cabeza, pero les resulta difícil explicarla correctamente.
 
 Las conversaciones terminan llenas de mensajes, imágenes de referencia, capturas de pantalla y preguntas que se repiten una y otra vez:
 
@@ -59,7 +59,7 @@ Esto implicó trabajar en:
 
 EstampaPaya me dejó varias lecciones importantes.
 
-La primera es que construir el producto suele ser la parte más fácil.
+La primera es que construir un producto suele ser la parte más fácil.
 
 La parte difícil es conseguir que las personas regresen.
 
@@ -75,7 +75,7 @@ Eso obliga a pensar menos en retención tradicional y más en:
 
 ## Qué haría diferente
 
-Si comenzara nuevamente, dedicaría menos tiempo a funcionalidades avanzadas y más tiempo a validar la demanda desde el primer día.
+Si comenzara de nuevo, dedicaría menos tiempo a desarrollar funcionalidades avanzadas y más a validar la demanda desde el primer día.
 
 También invertiría antes en:
 
@@ -86,12 +86,12 @@ También invertiría antes en:
 
 ## Estado actual
 
-EstampaPaya está listo para usar en [estampapaya.com](https://www.estampapaya.com/). Allí puedes explorar la plataforma, personalizar productos en 3D y solicitar cotizaciones.
+EstampaPaya está disponible en [estampapaya.com](https://www.estampapaya.com/). Allí puedes explorar la plataforma, personalizar productos en 3D y solicitar cotizaciones.
 
 Para mí, el proyecto también representa algo más importante que una plataforma de estampado.
 
-Fue una oportunidad para explorar visualización 3D, experiencia de usuario, marketplaces y validación de producto en un contexto real.
+Fue una oportunidad para explorar la visualización 3D, la experiencia de usuario, los marketplaces y la validación de productos en un contexto real.
 
-Más que un producto terminado, EstampaPaya fue un laboratorio donde pude aprender cómo las personas interactúan con herramientas de personalización digital.
+Más que un producto terminado, EstampaPaya fue un laboratorio en el que pude aprender cómo interactúan las personas con las herramientas de personalización digital.
 
 Y esas lecciones siguen siendo útiles en cada proyecto que construyo hoy.

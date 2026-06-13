@@ -18,7 +18,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<html lang="en" class="scroll-smooth bg-[#f7f5f0] dark:bg-[#0b0b0b]">
+<html lang="en" class="scroll-smooth bg-canvas dark:bg-canvas-dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,7 +37,7 @@ const {
     <ClientRouter />
   </head>
   <body
-    class="m-0 bg-[#f7f5f0] font-['Geist','Geist_Sans',ui-sans-serif,system-ui,sans-serif] text-sm leading-[1.55] text-[#0d0d0d] antialiased dark:bg-[#0b0b0b] dark:text-[#f4f1ea]"
+    class="m-0 bg-canvas font-sans text-sm leading-[1.55] text-ink antialiased dark:bg-canvas-dark dark:text-ink-dark"
   >
     <slot />
   </body>
