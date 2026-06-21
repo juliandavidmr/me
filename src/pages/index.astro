@@ -9,7 +9,7 @@ import { sortByDate } from '@/utils/Posts';
 const allPosts = Object.values(
   import.meta.glob('./posts/**/*.md', { eager: true }),
 );
-const lastThreePosts = sortByDate(allPosts).slice(0, 3);
+const latestPosts = sortByDate(allPosts).slice(0, 7);
 const { title, description } = AppConfig;
 const formatDate = (date: string | Date) =>
   new Intl.DateTimeFormat('en-CA', {
@@ -55,10 +55,12 @@ const headingText =
         <span
           class="kinetic-line font-normal tracking-[-.09em]"
           data-text="here."
-          tabindex="0"><em class="not-italic">here</em><b
-            class="text-[.5em] text-accent">.</b
-          ></span
+          tabindex="0"
         >
+          <em class="not-italic">here</em><b class="text-[.5em] text-accent">
+            .
+          </b>
+        </span>
       </h1>
       <div
         class="mx-auto mt-8 w-56 self-center text-xs -tracking-brand text-muted dark:text-muted-dark max-sm:mx-0 max-sm:mt-14 max-sm:w-auto"
@@ -98,7 +100,7 @@ const headingText =
       </div>
       <div class="border-t border-line dark:border-line-dark max-sm:border-0">
         {
-          lastThreePosts.map((post) => (
+          latestPosts.map((post) => (
             <a
               class="group grid min-h-16 grid-cols-[6.875rem_1.25rem_minmax(17.5rem,1fr)_6.875rem_7.5rem_1.375rem] items-center border-b border-line no-underline transition-colors hover:bg-accent/[.025] dark:border-line-dark max-tablet:grid-cols-[5.9375rem_1.125rem_1fr_5.625rem_1.375rem] max-sm:relative max-sm:flex max-sm:min-h-24 max-sm:flex-wrap max-sm:gap-x-3 max-sm:gap-y-1 max-sm:py-4 max-sm:pr-5"
               href={publicPostUrl(post.url)}

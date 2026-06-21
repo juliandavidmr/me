@@ -24,7 +24,7 @@ En este caso quería probar algo muy concreto:
 
 El resultado fue una app compacta que detecta la mano, sigue el dedo índice y traduce algunos gestos simples en acciones del mouse.
 
-![Mouse Hand mostrando un diagrama virtual de la mano y controles compactos](https://raw.githubusercontent.com/juliandavidmr/mouse-hand/main/screenshot.png)
+![Mouse Hand mostrando un diagrama virtual de la mano y controles compactos](https://raw.githubusercontent.com/juliandavidmr/mouse-hand/master/screenshot.png)
 
 ## La idea
 
