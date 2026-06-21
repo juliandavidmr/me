@@ -1,0 +1,30 @@
+---
+interface Props {
+  canonical: string;
+  description: string;
+}
+
+const { canonical, description } = Astro.props as Props;
+---
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Audio Split',
+    applicationCategory: 'MultimediaApplication',
+    operatingSystem: 'Any',
+    url: canonical,
+    description,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    featureList: [
+      'Cortar audio online',
+      'Deteccion opcional de silencios',
+      'Descarga de segmentos WAV',
+      'Descarga ZIP',
+      'Reproduccion individual de segmentos',
+      'Procesamiento local con File API, PCM y FFmpeg WASM',
+    ],
+  })}
+/>
