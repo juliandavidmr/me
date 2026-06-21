@@ -29,6 +29,9 @@ export default defineConfig({
 
   integrations: [react(), mdx(), sitemap(), robotsTxt()],
   vite: {
+    optimizeDeps: {
+      exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'],
+    },
     plugins: [tailwindcss()],
   },
 });

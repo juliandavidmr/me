@@ -10,21 +10,55 @@ export interface Props {
   head: {
     title: string;
     description: string;
+    canonical?: string;
+    image?: string;
+    keywords?: string;
+    lang?: string;
+    type?: 'article' | 'profile' | 'website';
   };
 }
 
 const {
-  head: { title, description },
+  head: {
+    title,
+    description,
+    canonical,
+    image,
+    keywords,
+    lang = 'en',
+    type = 'website',
+  },
 } = Astro.props as Props;
+const canonicalUrl = canonical ?? Astro.url.href;
+const socialImageUrl = image
+  ? new URL(image, Astro.site ?? Astro.url).href
+  : undefined;
 ---
 
-<html lang="en" class="scroll-smooth bg-canvas dark:bg-canvas-dark">
+<html lang={lang} class="scroll-smooth bg-canvas dark:bg-canvas-dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={AppConfig.author} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content={type} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_CO' : 'en_US'} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Julian David" />
+    {socialImageUrl && <meta property="og:image" content={socialImageUrl} />}
+    <meta
+      name="twitter:card"
+      content={socialImageUrl ? 'summary_large_image' : 'summary'}
+    />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {socialImageUrl && <meta name="twitter:image" content={socialImageUrl} />}
 
     <link rel="alternate" type="application/rss+xml" href="/rss.xml" />
     <link
