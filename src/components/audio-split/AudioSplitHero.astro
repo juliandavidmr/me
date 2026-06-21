@@ -2,16 +2,14 @@
 
 ---
 
-<section
-  class="grid grid-cols-[minmax(0,1fr)_24rem] gap-14 max-tablet:grid-cols-1 max-tablet:gap-10"
->
-  <div>
+<section class="max-w-4xl">
+  <div class="max-w-3xl">
     <p class="text-2xs font-semibold uppercase tracking-[.2em]">
       Audio tool
       <b class="text-accent">/</b>
     </p>
     <h1
-      class="my-7 max-w-4xl text-[clamp(3.5rem,7vw,6.75rem)] font-medium leading-display tracking-display"
+      class="my-6 max-w-2xl text-[clamp(2.75rem,5.4vw,5rem)] font-medium leading-display tracking-display"
     >
       Cortar audio online<i class="not-italic text-accent">.</i>
     </h1>
@@ -21,21 +19,25 @@
     </p>
   </div>
 
-  <aside
-    class="self-end border-y border-line py-5 text-3xs uppercase tracking-label text-muted dark:border-line-dark dark:text-muted-dark"
-  >
-    <dl class="grid gap-4">
-      <div class="flex items-center justify-between gap-4">
+  <aside class="mt-8" aria-label="Capacidades de Audio Split">
+    <dl class="flex flex-wrap gap-2">
+      <div
+        class="flex items-center gap-2 border border-line px-3 py-1.5 text-3xs uppercase tracking-label text-muted dark:border-line-dark dark:text-muted-dark"
+      >
         <dt>Maximo</dt>
-        <dd class="text-ink dark:text-ink-dark">40 min</dd>
+        <dd class="font-medium text-ink dark:text-ink-dark">40 min</dd>
       </div>
-      <div class="flex items-center justify-between gap-4">
+      <div
+        class="flex items-center gap-2 border border-line px-3 py-1.5 text-3xs uppercase tracking-label text-muted dark:border-line-dark dark:text-muted-dark"
+      >
         <dt>Salida</dt>
-        <dd class="text-ink dark:text-ink-dark">WAV + ZIP</dd>
+        <dd class="font-medium text-ink dark:text-ink-dark">WAV + ZIP</dd>
       </div>
-      <div class="flex items-center justify-between gap-4">
+      <div
+        class="flex items-center gap-2 border border-line px-3 py-1.5 text-3xs uppercase tracking-label text-muted dark:border-line-dark dark:text-muted-dark"
+      >
         <dt>Motor</dt>
-        <dd class="text-ink dark:text-ink-dark">PCM local</dd>
+        <dd class="font-medium text-ink dark:text-ink-dark">PCM local</dd>
       </div>
     </dl>
   </aside>

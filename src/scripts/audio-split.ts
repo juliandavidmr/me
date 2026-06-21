@@ -54,6 +54,7 @@ const segmentMinutesInput =
   requiredElement<HTMLInputElement>('#segment-minutes');
 const silenceInput = requiredElement<HTMLInputElement>('#silence-enabled');
 const splitButton = requiredElement<HTMLButtonElement>('#split-button');
+const splitHint = requiredElement<HTMLElement>('#split-hint');
 const statusLabel = requiredElement<HTMLElement>('#status-label');
 const progressValue = requiredElement<HTMLElement>('#progress-value');
 const progressBar = requiredElement<HTMLElement>('#progress-bar');
@@ -85,6 +86,16 @@ const formatSize = (bytes: number): string => {
   );
   const unit = units[index] ?? 'B';
   return `${(bytes / 1024 ** index).toFixed(index === 0 ? 0 : 1)} ${unit}`;
+};
+
+const getSegmentMinutes = (): number =>
+  Math.max(1, Math.min(40, Number(segmentMinutesInput.value) || 5));
+
+const updateSplitHint = (): void => {
+  const minutes = getSegmentMinutes();
+  const unit = minutes === 1 ? 'minuto' : 'minutos';
+  const part = minutes === 1 ? 'parte' : 'partes';
+  splitHint.textContent = `Se dividira el audio en ${part} de ${minutes} ${unit}.`;
 };
 
 const setProgress = (value: number, label?: string): void => {
@@ -657,6 +668,9 @@ fileInput.addEventListener('change', async (): Promise<void> => {
   splitButton.disabled = false;
 });
 
+segmentMinutesInput.addEventListener('input', updateSplitHint);
+updateSplitHint();
+
 form.addEventListener('submit', async (event: SubmitEvent): Promise<void> => {
   event.preventDefault();
   if (!selectedFile) return;
@@ -667,11 +681,9 @@ form.addEventListener('submit', async (event: SubmitEvent): Promise<void> => {
   let context: AudioContext | undefined;
 
   try {
-    const segmentMinutes = Math.max(
-      1,
-      Math.min(40, Number(segmentMinutesInput.value) || 5),
-    );
+    const segmentMinutes = getSegmentMinutes();
     segmentMinutesInput.value = String(segmentMinutes);
+    updateSplitHint();
 
     const decoded = await decodeAudioFile(selectedFile);
     context = decoded.context;
