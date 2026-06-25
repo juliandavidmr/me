@@ -4,6 +4,7 @@ import { frame, Navbar } from '@/partials/Navbar';
 import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
 import { cn } from '@/utils/cn';
+import { games } from '@/utils/Games';
 import { sortByDate } from '@/utils/Posts';
 
 const allPosts = Object.values(
@@ -209,6 +210,53 @@ const headingText =
                   </b>
                 </>
               </footer>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class={cn(frame, 'py-10 pb-20 max-sm:py-8')} id="games">
+      <div class={heading}>
+        <h2 class={headingText}>
+          Games <b class="text-accent">/</b>
+        </h2><span class="h-px bg-line dark:bg-line-dark max-sm:hidden"
+        ></span><a
+          class={cn(
+            headingText,
+            'group no-underline max-sm:text-4xs max-sm:tracking-wide-label',
+          )}
+          href="/games/"
+          >View all games <b
+            class="ml-5 inline-block transition-transform group-hover:translate-x-1 max-sm:ml-1"
+            >→</b
+          ></a
+        >
+      </div>
+      <div class="border-t border-line dark:border-line-dark max-sm:border-0">
+        {
+          games.map((game) => (
+            <a
+              class="group grid min-h-20 grid-cols-[7.5rem_minmax(12rem,1fr)_12.5rem_1.375rem] items-center border-b border-line no-underline transition-colors hover:bg-accent/2.5 dark:border-line-dark max-sm:relative max-sm:flex max-sm:min-h-24 max-sm:flex-wrap max-sm:gap-x-3 max-sm:gap-y-1 max-sm:py-4 max-sm:pr-5"
+              href={game.href}
+            >
+              <time class="text-3xs uppercase tracking-label text-muted [font-variant-numeric:tabular-nums] dark:text-muted-dark">
+                {game.date}
+              </time>
+              <span>
+                <strong class="block text-lg font-medium tracking-title transition-transform group-hover:translate-x-1 max-sm:text-base">
+                  {game.title}
+                </strong>
+                <span class="mt-1 block text-xs text-muted dark:text-muted-dark">
+                  {game.description}
+                </span>
+              </span>
+              <span class="text-3xs uppercase tracking-label text-muted dark:text-muted-dark">
+                {game.meta}
+              </span>
+              <b class="font-normal transition-transform group-hover:translate-x-1 max-sm:absolute max-sm:bottom-5 max-sm:right-0">
+                →
+              </b>
             </a>
           ))
         }

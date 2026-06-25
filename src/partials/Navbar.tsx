@@ -1,7 +1,7 @@
 import { cn } from '@/utils/cn';
 
 type NavbarProps = {
-  active?: 'writing' | 'projects' | 'about';
+  active?: 'writing' | 'projects' | 'games' | 'about';
 };
 
 const frame =
@@ -45,6 +45,12 @@ const Navbar = ({ active }: NavbarProps) => (
         href="/projects/"
       >
         Projects
+      </a>
+      <a
+        className={cn(navLink, active === 'games' && 'after:scale-x-45')}
+        href="/games/"
+      >
+        Games
       </a>
       <a
         className={cn(navLink, active === 'about' && 'after:scale-x-45')}

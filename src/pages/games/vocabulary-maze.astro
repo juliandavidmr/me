@@ -1,0 +1,24 @@
+---
+import { VocabularyMazeGame } from '@/components/vocabulary-maze';
+import { getUtcDayKey } from '@/components/vocabulary-maze/domain/date';
+import { createDailyPuzzle } from '@/components/vocabulary-maze/domain/puzzle';
+import { Navbar } from '@/partials/Navbar';
+import Base from '@/templates/Base.astro';
+
+const title = 'Vocabulary Maze — Daily English word game';
+const description =
+  'A daily 2D vocabulary maze for practicing English meaning, synonyms, and pronunciation.';
+const canonical = new URL('/games/vocabulary-maze/', Astro.site ?? Astro.url)
+  .href;
+const puzzle = createDailyPuzzle(getUtcDayKey());
+---
+
+<Base head={{ title, description, canonical, lang: 'en' }}>
+  <Navbar />
+  <main
+    class="grid min-h-[calc(100vh-6rem)] place-items-center px-4 pb-16 pt-4"
+    transition:name="vocabulary-maze-page"
+  >
+    <VocabularyMazeGame client:load initialPuzzle={puzzle} />
+  </main>
+</Base>

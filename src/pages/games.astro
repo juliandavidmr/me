@@ -1,0 +1,16 @@
+---
+import JournalIndex from '@/templates/JournalIndex.astro';
+import { games } from '@/utils/Games';
+---
+
+<JournalIndex
+  eyebrow="Games"
+  title="Small games for learning"
+  description="Daily and experimental games built to make practice feel focused, lightweight, and repeatable."
+  items={games.map((game) => ({
+    date: game.date,
+    title: game.title,
+    meta: game.meta,
+    href: game.href,
+  }))}
+/>

@@ -11,8 +11,9 @@ interface Props {
 }
 
 const { eyebrow, title, description, items } = Astro.props as Props;
-let active: 'projects' | 'about' | undefined;
+let active: 'projects' | 'games' | 'about' | undefined;
 if (eyebrow === 'Projects') active = 'projects';
+if (eyebrow === 'Games') active = 'games';
 if (eyebrow === 'About') active = 'about';
 ---
 
