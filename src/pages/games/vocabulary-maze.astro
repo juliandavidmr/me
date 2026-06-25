@@ -2,23 +2,78 @@
 import { VocabularyMazeGame } from '@/components/vocabulary-maze';
 import { getUtcDayKey } from '@/components/vocabulary-maze/domain/date';
 import { createDailyPuzzle } from '@/components/vocabulary-maze/domain/puzzle';
+import VocabularyMazeStructuredData from '@/components/vocabulary-maze/VocabularyMazeStructuredData.astro';
 import { Navbar } from '@/partials/Navbar';
 import Base from '@/templates/Base.astro';
 
-const title = 'Vocabulary Maze — Daily English word game';
+const title = 'Vocabulary Maze — Daily English Vocabulary Game';
 const description =
-  'A daily 2D vocabulary maze for practicing English meaning, synonyms, and pronunciation.';
+  'Play a daily English vocabulary maze. Follow word clues, compare meanings and synonyms, hear pronunciation, and choose the correct exit.';
 const canonical = new URL('/games/vocabulary-maze/', Astro.site ?? Astro.url)
   .href;
+const keywords = [
+  'vocabulary maze',
+  'daily vocabulary game',
+  'English vocabulary game',
+  'word maze game',
+  'learn English vocabulary',
+  'synonym game',
+  'meaning puzzle',
+  'pronunciation practice',
+  'word association puzzle',
+].join(', ');
 const puzzle = createDailyPuzzle(getUtcDayKey());
 ---
 
-<Base head={{ title, description, canonical, lang: 'en' }}>
-  <Navbar />
+<Base head={{ title, description, canonical, keywords, lang: 'en' }}>
+  <Navbar active="games" />
   <main
     class="grid min-h-[calc(100vh-6rem)] place-items-center px-4 pb-16 pt-4"
     transition:name="vocabulary-maze-page"
   >
     <VocabularyMazeGame client:load initialPuzzle={puzzle} />
+
+    <section
+      class="mx-auto mt-10 grid w-full max-w-120 gap-5 border-t border-line pt-8 text-sm leading-copy text-muted dark:border-line-dark dark:text-muted-dark"
+      aria-labelledby="vocabulary-maze-about"
+    >
+      <div class="grid gap-3">
+        <h2
+          id="vocabulary-maze-about"
+          class="text-base font-medium text-ink dark:text-ink-dark"
+        >
+          Daily English Vocabulary Maze
+        </h2>
+        <p>
+          Vocabulary Maze is a daily word puzzle for practicing English
+          vocabulary through meaning, synonyms, word association, and
+          pronunciation. Each day has one word, one deterministic maze, and a
+          small set of possible exits.
+        </p>
+        <p>
+          Start from the daily word, follow nearby vocabulary clues through the
+          maze, listen to the pronunciation when needed, and choose the exit
+          that best matches the word meaning.
+        </p>
+      </div>
+
+      <div class="grid gap-3">
+        <h2 class="text-base font-medium text-ink dark:text-ink-dark">
+          How The Puzzle Works
+        </h2>
+        <ul class="grid list-disc gap-2 pl-5">
+          <li>A new English vocabulary word is selected each UTC day.</li>
+          <li>The maze stays the same for every visit during that day.</li>
+          <li>Internal spots teach related words without changing the goal.</li>
+          <li>The final exits are candidate meanings represented by words.</li>
+          <li>Native browser text-to-speech helps with pronunciation.</li>
+        </ul>
+      </div>
+    </section>
   </main>
+
+  <VocabularyMazeStructuredData
+    canonical={canonical}
+    description={description}
+  />
 </Base>

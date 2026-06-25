@@ -1,0 +1,66 @@
+---
+interface Props {
+  canonical: string;
+  description: string;
+}
+
+const { canonical, description } = Astro.props as Props;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebApplication',
+      name: 'Vocabulary Maze',
+      applicationCategory: 'GameApplication',
+      operatingSystem: 'Any',
+      url: canonical,
+      description,
+      inLanguage: 'en',
+      isAccessibleForFree: true,
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      featureList: [
+        'Daily English vocabulary puzzle',
+        'Maze-based word association challenge',
+        'Synonym and meaning practice',
+        'Native browser text-to-speech pronunciation',
+        'One attempt per browser session per day',
+      ],
+    },
+    {
+      '@type': 'Game',
+      name: 'Vocabulary Maze',
+      url: canonical,
+      description,
+      genre: ['Word game', 'Educational game', 'Puzzle game'],
+      educationalUse: 'Vocabulary practice',
+      learningResourceType: 'Interactive game',
+      inLanguage: 'en',
+      isAccessibleForFree: true,
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Games',
+          item: new URL('/games/', Astro.site ?? Astro.url).href,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Vocabulary Maze',
+          item: canonical,
+        },
+      ],
+    },
+  ],
+};
+---
+
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(structuredData)}
+/>
