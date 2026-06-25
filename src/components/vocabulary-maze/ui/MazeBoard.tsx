@@ -317,7 +317,7 @@ export const MazeBoard = ({
                 'grid place-items-center',
                 node.type === 'entry' ? 'text-xs' : 'text-4xs sm:text-xs',
                 node.type === 'entry' &&
-                  'bg-ink text-canvas dark:bg-ink-dark dark:text-canvas-dark',
+                  'border border-ink bg-canvas text-ink dark:border-ink-dark dark:bg-ink-dark dark:text-canvas-dark',
                 node.type === 'path' &&
                   'bg-canvas text-ink dark:bg-canvas-dark dark:text-ink-dark',
                 node.type === 'deadEnd' &&
