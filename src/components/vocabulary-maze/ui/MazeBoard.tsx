@@ -9,6 +9,8 @@ type MazeBoardProps = {
   highlightedNodeIds: Set<string>;
   reachableNodeIds: Set<string>;
   nodes: MazeNode[];
+  onNodePreview: (nodeId: string) => void;
+  onNodePreviewEnd: () => void;
   onNodeSelect: (node: MazeNode) => void;
   visitedNodeIds: Set<string>;
 };
@@ -23,11 +25,22 @@ type WallSegment = {
 
 const NODE_SIZE_REM = 2.15;
 
-const getNodeStyle = (node: MazeNode, maxX: number, maxY: number) => ({
+const getNodeStyle = (
+  node: MazeNode,
+  maxX: number,
+  maxY: number,
+  isExpanded: boolean,
+) => ({
   left: `${((node.x + 0.5) / (maxX + 1)) * 100}%`,
   top: `${((node.y + 0.5) / (maxY + 1)) * 100}%`,
-  width: `${NODE_SIZE_REM}rem`,
+  minWidth: `${NODE_SIZE_REM}rem`,
+  width: isExpanded ? 'auto' : `${NODE_SIZE_REM}rem`,
   height: `${NODE_SIZE_REM}rem`,
+});
+
+const getExitLabelStyle = (node: MazeNode, maxY: number) => ({
+  left: 'calc(100% + 0.75rem)',
+  top: `${((node.y + 0.5) / (maxY + 1)) * 100}%`,
 });
 
 const getNodeTitle = (node: MazeNode) => {
@@ -158,6 +171,8 @@ export const MazeBoard = ({
   edges,
   highlightedNodeIds,
   nodes,
+  onNodePreview,
+  onNodePreviewEnd,
   onNodeSelect,
   reachableNodeIds,
   visitedNodeIds,
@@ -262,57 +277,103 @@ export const MazeBoard = ({
         const isReachable = reachableNodeIds.has(node.id);
         const canMove = isReachable || isVisited;
         const isNextChoice = highlightedNodeIds.has(node.id) && !isVisited;
-        const hasLabel = node.label.length > 0;
+        const displayLabel = node.type === 'entry' ? 'Start' : node.label;
+        const showInlineLabel = Boolean(
+          displayLabel && (node.type === 'entry' || isActive || isNextChoice),
+        );
+        const showExternalExitLabel = node.type === 'exit' && displayLabel;
 
         return (
-          <button
-            key={node.id}
-            className={cn(
-              'absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full text-[0.48rem] font-semibold uppercase leading-none transition-[background-color,border-color,color,opacity,transform]',
-              'focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-canvas dark:focus:ring-offset-canvas-dark',
-              'grid place-items-center',
-              node.type === 'entry' &&
-                'bg-ink text-canvas dark:bg-ink-dark dark:text-canvas-dark',
-              node.type === 'path' &&
-                'bg-canvas text-muted dark:bg-canvas-dark dark:text-muted-dark',
-              node.type === 'deadEnd' &&
-                'bg-canvas text-muted dark:bg-canvas-dark dark:text-muted-dark',
-              node.type === 'exit' &&
-                'border border-accent bg-canvas text-accent dark:bg-canvas-dark',
-              isVisited && 'bg-accent text-ink',
-              isActive &&
-                'z-20 scale-110 bg-accent text-ink shadow-[0_0_0_0.35rem_rgba(255,90,31,0.2)]',
-              isNextChoice &&
-                'animate-pulse bg-accent/20 text-accent ring-2 ring-accent ring-offset-2 ring-offset-canvas dark:ring-offset-canvas-dark',
-              !canMove && 'opacity-45',
-              canMove ? 'cursor-pointer' : 'cursor-default',
-            )}
-            type="button"
-            disabled={!canMove}
-            style={getNodeStyle(node, maxX, maxY)}
-            onClick={() => onNodeSelect(node)}
-            aria-label={getNodeTitle(node) || node.type}
-            title={getNodeTitle(node)}
-          >
-            {isNextChoice && (
-              <span className="absolute inset-[-0.45rem] -z-10 rounded-full bg-accent/20" />
-            )}
-            {hasLabel ? (
-              <span className="max-w-[2rem] truncate px-0.5">
-                {node.type === 'entry' ? 'Start' : node.label}
-              </span>
-            ) : (
-              <span
+          <div key={node.id} className="contents">
+            <button
+              className={cn(
+                'absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full text-[0.62rem] font-bold uppercase leading-none -tracking-brand transition-[background-color,border-color,color,opacity,transform]',
+                'focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-canvas dark:focus:ring-offset-canvas-dark',
+                'grid place-items-center',
+                node.type === 'entry' &&
+                  'bg-ink text-canvas dark:bg-ink-dark dark:text-canvas-dark',
+                node.type === 'path' &&
+                  'bg-canvas text-ink dark:bg-canvas-dark dark:text-ink-dark',
+                node.type === 'deadEnd' &&
+                  'bg-canvas text-ink dark:bg-canvas-dark dark:text-ink-dark',
+                node.type === 'exit' &&
+                  'border border-accent bg-accent/15 text-accent shadow-[0_0_0_0.18rem_rgba(255,90,31,0.08)] dark:bg-accent/20 dark:text-accent',
+                isVisited && 'bg-accent text-ink',
+                isActive &&
+                  'z-20 scale-110 bg-accent text-ink shadow-[0_0_0_0.35rem_rgba(255,90,31,0.2)]',
+                isNextChoice &&
+                  'animate-pulse bg-accent/20 text-accent ring-2 ring-accent ring-offset-2 ring-offset-canvas dark:ring-offset-canvas-dark',
+                !canMove && node.type !== 'exit' && 'opacity-45',
+                canMove ? 'cursor-pointer' : 'cursor-default',
+                showInlineLabel && 'px-2.5',
+              )}
+              type="button"
+              aria-disabled={!canMove}
+              tabIndex={showExternalExitLabel || !canMove ? -1 : undefined}
+              style={getNodeStyle(node, maxX, maxY, showInlineLabel)}
+              onClick={() => {
+                if (canMove) {
+                  onNodeSelect(node);
+                }
+              }}
+              onBlur={onNodePreviewEnd}
+              onFocus={() => onNodePreview(node.id)}
+              onPointerEnter={() => onNodePreview(node.id)}
+              onPointerLeave={onNodePreviewEnd}
+              aria-label={getNodeTitle(node) || node.type}
+              title={getNodeTitle(node)}
+            >
+              {isNextChoice && (
+                <span className="absolute inset-[-0.45rem] -z-10 rounded-full bg-accent/20" />
+              )}
+              {showInlineLabel ? (
+                <span className="whitespace-nowrap px-0.5 drop-shadow-[0_1px_0_rgba(0,0,0,0.28)]">
+                  {displayLabel}
+                </span>
+              ) : (
+                <span
+                  className={cn(
+                    'size-2 rounded-full bg-current opacity-55',
+                    isActive && 'opacity-100',
+                    node.type === 'exit' && 'size-2.5 opacity-90',
+                  )}
+                />
+              )}
+              {isActive && (
+                <span className="absolute -bottom-1 size-2 rounded-full border border-canvas bg-ink dark:border-canvas-dark dark:bg-ink-dark" />
+              )}
+            </button>
+            {showExternalExitLabel && (
+              <button
                 className={cn(
-                  'size-2 rounded-full bg-current opacity-55',
-                  isActive && 'opacity-100',
+                  'absolute z-30 -translate-y-1/2 rounded-full border border-accent bg-accent/15 px-3.5 py-2 text-[0.62rem] font-bold uppercase leading-none -tracking-brand text-accent shadow-[0_0_0_0.18rem_rgba(255,90,31,0.08)] transition-[background-color,border-color,color,opacity,transform]',
+                  'focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-canvas dark:bg-accent/20 dark:focus:ring-offset-canvas-dark',
+                  isActive &&
+                    'scale-105 bg-accent text-ink shadow-[0_0_0_0.35rem_rgba(255,90,31,0.2)]',
+                  canMove ? 'cursor-pointer' : 'cursor-default',
                 )}
-              />
+                type="button"
+                aria-disabled={!canMove}
+                tabIndex={canMove ? undefined : -1}
+                style={getExitLabelStyle(node, maxY)}
+                onClick={() => {
+                  if (canMove) {
+                    onNodeSelect(node);
+                  }
+                }}
+                onBlur={onNodePreviewEnd}
+                onFocus={() => onNodePreview(node.id)}
+                onPointerEnter={() => onNodePreview(node.id)}
+                onPointerLeave={onNodePreviewEnd}
+                aria-label={getNodeTitle(node)}
+                title={getNodeTitle(node)}
+              >
+                <span className="whitespace-nowrap drop-shadow-[0_1px_0_rgba(0,0,0,0.28)]">
+                  {displayLabel}
+                </span>
+              </button>
             )}
-            {isActive && (
-              <span className="absolute -bottom-1 size-2 rounded-full border border-canvas bg-ink dark:border-canvas-dark dark:bg-ink-dark" />
-            )}
-          </button>
+          </div>
         );
       })}
     </div>

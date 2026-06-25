@@ -1,15 +1,12 @@
 import { useMemo, useState } from 'react';
 
-import { cn } from '@/utils/cn';
-
 import { getConnectedNodeIds } from './domain/maze';
-import type { DailyPuzzle, MazeNode, PuzzleExit } from './domain/types';
+import type { DailyPuzzle, MazeNode } from './domain/types';
 import { useDictionaryMeanings } from './hooks/useDictionaryMeanings';
 import { useElapsedTimer } from './hooks/useElapsedTimer';
 import { useReminder } from './hooks/useReminder';
 import { useSpeech } from './hooks/useSpeech';
 import { useStoredAttempt } from './hooks/useStoredAttempt';
-import { ExitPanel } from './ui/ExitPanel';
 import { MazeBoard } from './ui/MazeBoard';
 import { ResultPanel } from './ui/ResultPanel';
 import { Timer } from './ui/Timer';
@@ -60,7 +57,7 @@ export const VocabularyMazeGame = ({
   const [visitedNodeIds, setVisitedNodeIds] = useState<Set<string>>(
     () => new Set(['entry']),
   );
-  const [selectedExit, setSelectedExit] = useState<PuzzleExit | null>(null);
+  const [focusedNodeId, setFocusedNodeId] = useState<string | null>(null);
   const { attempt, saveAttempt } = useStoredAttempt(puzzle.date);
   const elapsedSeconds = useElapsedTimer(!attempt);
   const { speak } = useSpeech(puzzle.word);
@@ -125,6 +122,10 @@ export const VocabularyMazeGame = ({
     [puzzle.maze.edges, visitedNodeIds],
   );
   const activeNode = puzzle.maze.nodes.find((node) => node.id === activeNodeId);
+  const focusedNode = puzzle.maze.nodes.find(
+    (node) => node.id === focusedNodeId,
+  );
+  const spotNode = focusedNode ?? activeNode;
   const correctExit =
     puzzle.exits.find((exit) => exit.isCorrect) ?? puzzle.exits[0];
   const meanings =
@@ -150,27 +151,52 @@ export const VocabularyMazeGame = ({
     );
 
     if (node.type === 'exit' && node.exitId) {
-      setSelectedExit(
-        puzzle.exits.find((exit) => exit.id === node.exitId) ?? null,
-      );
-    } else {
-      setSelectedExit(null);
+      const selectedExit =
+        puzzle.exits.find((exit) => exit.id === node.exitId) ?? null;
+
+      if (selectedExit) {
+        saveAttempt({
+          date: puzzle.date,
+          selectedExitId: selectedExit.id,
+          selectedExitWord: selectedExit.word,
+          isCorrect: selectedExit.isCorrect,
+          elapsedSeconds,
+          finishedAt: new Date().toISOString(),
+        });
+      }
     }
   };
 
-  const confirmExit = () => {
-    if (!selectedExit) {
-      return;
+  const getSpotLabel = (node?: MazeNode) => {
+    if (!node) {
+      return '—';
     }
 
-    saveAttempt({
-      date: puzzle.date,
-      selectedExitId: selectedExit.id,
-      selectedExitWord: selectedExit.word,
-      isCorrect: selectedExit.isCorrect,
-      elapsedSeconds,
-      finishedAt: new Date().toISOString(),
-    });
+    if (node.type === 'entry') {
+      return puzzle.word;
+    }
+
+    return node.label || 'Empty spot';
+  };
+
+  const getSpotMeta = (node?: MazeNode) => {
+    if (!node) {
+      return 'Spot';
+    }
+
+    if (node.id === activeNodeId) {
+      return 'Current';
+    }
+
+    if (node.type === 'exit') {
+      return 'Exit';
+    }
+
+    if (highlightedNodeIds.has(node.id)) {
+      return 'Available';
+    }
+
+    return 'Spot';
   };
 
   return (
@@ -186,7 +212,7 @@ export const VocabularyMazeGame = ({
             </h1>
           </div>
           <div className="text-right text-xs text-muted dark:text-muted-dark">
-            <p>Tiempo</p>
+            <p>Time</p>
             <strong className="text-base font-medium text-ink dark:text-ink-dark">
               <Timer seconds={attempt?.elapsedSeconds ?? elapsedSeconds} />
             </strong>
@@ -235,38 +261,33 @@ export const VocabularyMazeGame = ({
             nodes={puzzle.maze.nodes}
             reachableNodeIds={suggestedNodeIds}
             visitedNodeIds={visitedNodeIds}
+            onNodePreview={setFocusedNodeId}
+            onNodePreviewEnd={() => setFocusedNodeId(null)}
             onNodeSelect={moveToNode}
           />
 
-          <div
-            className={cn(
-              'min-h-36',
-              selectedExit
-                ? 'block'
-                : 'grid place-items-center border-y border-line py-5 text-center text-xs text-muted dark:border-line-dark dark:text-muted-dark',
-            )}
-          >
-            {selectedExit ? (
-              <ExitPanel
-                exit={selectedExit}
-                meaning={meanings[selectedExit.word]}
-                onBack={() => setSelectedExit(null)}
-                onConfirm={confirmExit}
-              />
-            ) : (
-              <p>
-                Sigue el rastro, toca nodos visitados para volver y confirma
-                solo cuando una salida defina la palabra.
-              </p>
-            )}
+          <div className="flex min-h-16 items-center justify-between gap-4 border-y border-line py-3 dark:border-line-dark">
+            <p className="text-3xs font-semibold uppercase tracking-label text-muted dark:text-muted-dark">
+              {getSpotMeta(spotNode)}
+            </p>
+            <p className="min-w-0 text-right text-sm font-medium text-ink dark:text-ink-dark">
+              {getSpotLabel(spotNode)}
+            </p>
+          </div>
+
+          <div className="grid place-items-center text-center text-sm text-muted dark:text-muted-dark">
+            <p>
+              Follow the trail, tap visited nodes to go back, and choose an exit
+              to finish.
+            </p>
           </div>
         </>
       )}
 
       {dictionary.status === 'error' && (
         <p className="text-xs text-muted dark:text-muted-dark">
-          La definicion extendida no esta disponible ahora; el juego sigue con
-          datos del catalogo local.
+          The extended definition is not available right now; the game will keep
+          using local catalog data.
         </p>
       )}
     </section>

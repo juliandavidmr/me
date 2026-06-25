@@ -332,7 +332,7 @@ const buildMaze = (
             `exit-node-${exitIndex}`,
             x,
             y,
-            `Exit ${exitIndex + 1}`,
+            exitWords[exitIndex] ?? `Exit ${exitIndex + 1}`,
             'exit',
             `exit-${exitIndex}`,
           ),

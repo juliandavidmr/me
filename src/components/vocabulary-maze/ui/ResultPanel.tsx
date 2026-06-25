@@ -30,13 +30,13 @@ export const ResultPanel = ({
   <section className="grid gap-6 border-y border-line py-6 dark:border-line-dark">
     <div>
       <p className="text-3xs font-semibold uppercase tracking-label text-muted dark:text-muted-dark">
-        Resultado
+        Result
       </p>
       <h2 className="mt-2 text-prose-h3-mobile font-medium tracking-title">
-        {attempt.isCorrect ? 'Salida correcta' : 'Salida incorrecta'}
+        {attempt.isCorrect ? 'Correct exit' : 'Wrong exit'}
       </h2>
       <p className="mt-2 text-xs text-muted dark:text-muted-dark">
-        Tiempo: <Timer seconds={attempt.elapsedSeconds} />
+        Time: <Timer seconds={attempt.elapsedSeconds} />
       </p>
     </div>
 
@@ -74,7 +74,7 @@ export const ResultPanel = ({
 
     <div>
       <p className="text-3xs font-semibold uppercase tracking-label text-muted dark:text-muted-dark">
-        Ruta correcta
+        Correct path
       </p>
       <p className="mt-2 text-xs leading-copy text-muted dark:text-muted-dark">
         {path.join(' -> ')}
@@ -86,9 +86,7 @@ export const ResultPanel = ({
       type="button"
       onClick={onEnableReminder}
     >
-      {reminderState === 'enabled'
-        ? 'Recordatorio activo'
-        : 'Recordarme mañana'}
+      {reminderState === 'enabled' ? 'Reminder enabled' : 'Remind me tomorrow'}
     </button>
   </section>
 );
