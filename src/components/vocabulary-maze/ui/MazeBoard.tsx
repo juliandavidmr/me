@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { cn } from '@/utils/cn';
 
 import type { MazeEdge, MazeNode } from '../domain/types';
@@ -23,7 +25,8 @@ type WallSegment = {
   y2: number;
 };
 
-const NODE_SIZE_REM = 2.15;
+const NODE_SIZE_REM = 1.4;
+const MOBILE_EXIT_PREVIEW_MS = 3000;
 
 const getNodeStyle = (
   node: MazeNode,
@@ -41,6 +44,12 @@ const getNodeStyle = (
 const getExitLabelStyle = (node: MazeNode, maxY: number) => ({
   left: 'calc(100% + 0.75rem)',
   top: `${((node.y + 0.5) / (maxY + 1)) * 100}%`,
+});
+
+const getExitPopoverStyle = (node: MazeNode, maxX: number, maxY: number) => ({
+  left: `${((node.x + 0.5) / (maxX + 1)) * 100}%`,
+  top: `${((node.y + 0.5) / (maxY + 1)) * 100}%`,
+  marginLeft: '-0.75rem',
 });
 
 const getNodeTitle = (node: MazeNode) => {
@@ -183,6 +192,21 @@ export const MazeBoard = ({
   const width = maxX + 1;
   const height = maxY + 1;
   const walls = buildWallSegments(nodes, edges, maxX, maxY);
+  const [mobileExitPreviewNodeId, setMobileExitPreviewNodeId] = useState<
+    string | null
+  >(null);
+
+  useEffect(() => {
+    if (!mobileExitPreviewNodeId) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setMobileExitPreviewNodeId(null);
+    }, MOBILE_EXIT_PREVIEW_MS);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [mobileExitPreviewNodeId]);
 
   return (
     <div
@@ -282,14 +306,16 @@ export const MazeBoard = ({
           displayLabel && (node.type === 'entry' || isActive || isNextChoice),
         );
         const showExternalExitLabel = node.type === 'exit' && displayLabel;
+        const showMobileExitPopover = mobileExitPreviewNodeId === node.id;
 
         return (
           <div key={node.id} className="contents">
             <button
               className={cn(
-                'absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full text-[0.62rem] font-bold uppercase leading-none -tracking-brand transition-[background-color,border-color,color,opacity,transform]',
+                'absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full font-bold uppercase leading-none -tracking-brand transition-[background-color,border-color,color,opacity,transform]',
                 'focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-canvas dark:focus:ring-offset-canvas-dark',
                 'grid place-items-center',
+                node.type === 'entry' ? 'text-xs' : 'text-4xs sm:text-xs',
                 node.type === 'entry' &&
                   'bg-ink text-canvas dark:bg-ink-dark dark:text-canvas-dark',
                 node.type === 'path' &&
@@ -302,16 +328,22 @@ export const MazeBoard = ({
                 isActive &&
                   'z-20 scale-110 bg-accent text-ink shadow-[0_0_0_0.35rem_rgba(255,90,31,0.2)]',
                 isNextChoice &&
-                  'animate-pulse bg-accent/20 text-accent ring-2 ring-accent ring-offset-2 ring-offset-canvas dark:ring-offset-canvas-dark',
+                  'animate-pulse bg-accent/20 text-accent ring-1 ring-accent ring-offset-1 ring-offset-canvas dark:ring-offset-canvas-dark sm:ring-2 sm:ring-offset-2',
                 !canMove && node.type !== 'exit' && 'opacity-45',
                 canMove ? 'cursor-pointer' : 'cursor-default',
-                showInlineLabel && 'px-2.5',
+                showInlineLabel && 'px-1.5 md:px-2.5',
               )}
               type="button"
               aria-disabled={!canMove}
               tabIndex={showExternalExitLabel || !canMove ? -1 : undefined}
               style={getNodeStyle(node, maxX, maxY, showInlineLabel)}
               onClick={() => {
+                if (node.type === 'exit') {
+                  setMobileExitPreviewNodeId(node.id);
+                } else {
+                  setMobileExitPreviewNodeId(null);
+                }
+
                 if (canMove) {
                   onNodeSelect(node);
                 }
@@ -324,7 +356,7 @@ export const MazeBoard = ({
               title={getNodeTitle(node)}
             >
               {isNextChoice && (
-                <span className="absolute inset-[-0.45rem] -z-10 rounded-full bg-accent/20" />
+                <span className="absolute inset-[-0.18rem] -z-10 rounded-full bg-accent/20 sm:inset-[-0.45rem]" />
               )}
               {showInlineLabel ? (
                 <span className="whitespace-nowrap px-0.5 drop-shadow-[0_1px_0_rgba(0,0,0,0.28)]">
@@ -346,7 +378,7 @@ export const MazeBoard = ({
             {showExternalExitLabel && (
               <button
                 className={cn(
-                  'absolute z-30 -translate-y-1/2 rounded-full border border-accent bg-accent/15 px-3.5 py-2 text-[0.62rem] font-bold uppercase leading-none -tracking-brand text-accent shadow-[0_0_0_0.18rem_rgba(255,90,31,0.08)] transition-[background-color,border-color,color,opacity,transform]',
+                  'absolute z-30 hidden -translate-y-1/2 rounded-full border border-accent bg-accent/15 px-3.5 py-2 text-xs font-bold uppercase leading-none -tracking-brand text-accent shadow-[0_0_0_0.18rem_rgba(255,90,31,0.08)] transition-[background-color,border-color,color,opacity,transform] sm:block',
                   'focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-canvas dark:bg-accent/20 dark:focus:ring-offset-canvas-dark',
                   isActive &&
                     'scale-105 bg-accent text-ink shadow-[0_0_0_0.35rem_rgba(255,90,31,0.2)]',
@@ -372,6 +404,17 @@ export const MazeBoard = ({
                   {displayLabel}
                 </span>
               </button>
+            )}
+            {showExternalExitLabel && showMobileExitPopover && (
+              <div
+                className="absolute z-40 -translate-x-full -translate-y-1/2 rounded-full border border-accent bg-canvas px-3 py-2 text-xs font-bold uppercase leading-none -tracking-brand text-accent shadow-[0_0_0_0.22rem_rgba(255,90,31,0.14)] dark:bg-canvas-dark sm:hidden"
+                style={getExitPopoverStyle(node, maxX, maxY)}
+                role="status"
+              >
+                <span className="whitespace-nowrap drop-shadow-[0_1px_0_rgba(0,0,0,0.28)]">
+                  {displayLabel}
+                </span>
+              </div>
             )}
           </div>
         );
