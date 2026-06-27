@@ -52,7 +52,7 @@ const Footer = () => (
         </p>
         <form
           className="mt-5 flex border-b border-ink dark:border-ink-dark"
-          action="mailto:hello@iamjuliand.com"
+          action="mailto:iamjuliand.retype181@aleeas.com"
           method="post"
         >
           <label className="sr-only" htmlFor="footer-email">

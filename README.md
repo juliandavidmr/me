@@ -71,13 +71,6 @@ Clone this project and use it to create your own Astro blog. You can check the
       </a>
     </td>
   </tr>
-  <tr height="187px">
-    <td align="center" width="33%">
-      <a href="mailto:contact@creativedesignsguru.com">
-        Add your logo here
-      </a>
-    </td>
-  </tr>
 </table>
 
 ## Features
@@ -137,7 +130,7 @@ writing, that's Node v16.15.1
 
 Run the following command on your local environment (for example, in [Warp](https://go.warp.dev/nextjs-bp)):
 
-``` bash
+```bash
 git clone --depth=1 https://github.com/ixartz/Astro-boilerplate
 cd my-project-name
 npm install
@@ -145,7 +138,7 @@ npm install
 
 Then, you can run locally in development mode with live reload:
 
-``` bash
+```bash
 npm run dev
 ```
 
@@ -175,7 +168,7 @@ Clone this repository on own GitHub account and deploy to Netlify:
 All commands are run from the root of the project, from a terminal:
 
 | Command           | Action                                       |
-|:----------------  |:-------------------------------------------- |
+| :---------------- | :------------------------------------------- |
 | `npm install`     | Installs dependencies                        |
 | `npm run dev`     | Starts local dev server at `localhost:4321`  |
 | `npm run build`   | Build your production site to `./dist/`      |
@@ -258,13 +251,6 @@ Licensed under the MIT License, Copyright © 2024
     <td align="center" style=width="33%">
       <a href="https://nextjs-boilerplate.com/pro-saas-starter-kit">
         <img src="public/assets/images/nextjs-boilerplate-saas.png?raw=true" alt="Next.js SaaS Boilerplate with React" />
-      </a>
-    </td>
-  </tr>
-  <tr height="187px">
-    <td align="center" width="33%">
-      <a href="mailto:contact@creativedesignsguru.com">
-        Add your logo here
       </a>
     </td>
   </tr>
