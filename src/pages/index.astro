@@ -93,11 +93,13 @@ const headingText =
             'group no-underline max-sm:text-4xs max-sm:tracking-wide-label',
           )}
           href="/posts/"
-          >View all writing <b
-            class="ml-5 inline-block transition-transform group-hover:translate-x-1 max-sm:ml-1"
-            >→</b
-          ></a
         >
+          View all writing <b
+            class="ml-5 inline-block transition-transform group-hover:translate-x-1 max-sm:ml-1"
+          >
+            →
+          </b>
+        </a>
       </div>
       <div class="border-t border-line dark:border-line-dark max-sm:border-0">
         {
@@ -132,20 +134,23 @@ const headingText =
       <div class={heading}>
         <h2 class={headingText}>
           Projects <b class="text-accent">/</b>
-        </h2><span class="h-px bg-line dark:bg-line-dark max-sm:hidden"
-        ></span><a
+        </h2>
+        <span class="h-px bg-line dark:bg-line-dark max-sm:hidden"> </span>
+        <a
           class={cn(
             headingText,
             'group no-underline max-sm:text-4xs max-sm:tracking-wide-label',
           )}
           href="/projects/"
-          >View all projects <b
-            class="ml-5 inline-block transition-transform group-hover:translate-x-1 max-sm:ml-1"
-            >→</b
-          ></a
         >
+          View all projects <b
+            class="ml-5 inline-block transition-transform group-hover:translate-x-1 max-sm:ml-1"
+          >
+            →
+          </b>
+        </a>
       </div>
-      <div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {
           [
             [
@@ -185,7 +190,7 @@ const headingText =
                 <small class="text-2xs font-semibold">{index}</small>
                 <div>
                   <>
-                    <h3 class="mb-2.25 mt-22.5 text-card-title font-medium tracking-[-.06em]">
+                    <h3 class="mb-2.25 mt-22.5 text-card-title font-medium tracking-card-title mix-blend-difference text-white">
                       {name}
                     </h3>
                     <p class="m-0 text-xs tracking-[.02em]">

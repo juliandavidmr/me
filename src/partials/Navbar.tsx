@@ -4,8 +4,7 @@ type NavbarProps = {
   active?: 'writing' | 'projects' | 'games' | 'about';
 };
 
-const frame =
-  'ml-[max(8.4375rem,calc((100%-72.5rem)/2+4.25rem))] w-[min(72.5rem,calc(100%-11.875rem))] max-tablet:ml-15 max-tablet:w-[calc(100%-5rem)] max-sm:mx-4.5 max-sm:w-[calc(100%-2.25rem)]';
+const frame = 'mx-auto w-full max-w-page px-4.5 sm:px-10 tablet:px-15';
 
 const NavbarItems = [
   { label: 'Writing', href: '/posts/', active: 'writing' },

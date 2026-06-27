@@ -45,6 +45,8 @@
   --tracking-tight-copy: -0.03em;
   --tracking-title: -0.035em;
   --tracking-wide-label: 0.1em;
+
+  --container-page: 72.5rem;
 }
 
 .kinetic-title {
