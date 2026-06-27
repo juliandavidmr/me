@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, sessionDrivers } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
@@ -9,6 +9,9 @@ import cloudflare from '@astrojs/cloudflare';
 // https://astro.build/config
 export default defineConfig({
   adapter: cloudflare(),
+  session: {
+    driver: sessionDrivers.lruCache(),
+  },
   // base: '.', // Set a path prefix.
   // Use to generate your sitemap and canonical URLs in your final build.
   site: 'https://iamjuliand.com/',
