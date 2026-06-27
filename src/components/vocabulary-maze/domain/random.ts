@@ -1,20 +1,29 @@
+const HASH_MODULUS = 2147483647;
+const HASH_MULTIPLIER = 48271;
+
 export const hashSeed = (value: string) => {
-  let hash = 7;
+  let hash = 17 + value.length;
 
   for (let index = 0; index < value.length; index += 1) {
-    hash = (hash * 31 + value.charCodeAt(index)) % 2147483647;
+    const code = value.charCodeAt(index);
+    const position = index + 1;
+
+    hash = (hash * 131 + code * (position + 17)) % HASH_MODULUS;
+    hash = (hash * 524287 + code + position * 8191) % HASH_MODULUS;
   }
 
-  return hash;
+  return (
+    (hash * HASH_MULTIPLIER + value.length * 961748927) % HASH_MODULUS || 1
+  );
 };
 
 export const createSeededRandom = (seed: string) => {
-  let state = hashSeed(seed) || 1;
+  let state = hashSeed(seed) % HASH_MODULUS || 1;
 
   return () => {
-    state = (state * 48271) % 2147483647;
+    state = (state * HASH_MULTIPLIER) % HASH_MODULUS;
 
-    return (state - 1) / 2147483646;
+    return (state - 1) / (HASH_MODULUS - 1);
   };
 };
 

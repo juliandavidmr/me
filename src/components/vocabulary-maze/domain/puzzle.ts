@@ -1,10 +1,38 @@
 import { catalog, getEntry } from './catalog';
 import { CORRECT_PATH_LENGTH, MAX_EXITS, MIN_EXITS } from './constants';
-import { createSeededRandom, pickOne, shuffle } from './random';
+import { createSeededRandom, hashSeed, pickOne, shuffle } from './random';
 import type { CatalogEntry, DailyPuzzle, MazeNode } from './types';
 
 const uniqueWords = (words: string[]) =>
   words.filter((word, index, all) => word && all.indexOf(word) === index);
+
+const getGreatestCommonDivisor = (left: number, right: number): number =>
+  right === 0 ? left : getGreatestCommonDivisor(right, left % right);
+
+const getDayNumber = (date: string) => {
+  const [year, month, day] = date.split('-').map(Number);
+
+  if (!year || !month || !day) {
+    return hashSeed(date);
+  }
+
+  return Math.floor(Date.UTC(year, month - 1, day) / 86400000);
+};
+
+const getDailyWordIndex = (date: string, wordCount: number) => {
+  if (wordCount <= 1) {
+    return 0;
+  }
+
+  const offset = hashSeed('vocabulary-maze-word-offset') % wordCount;
+  let step = hashSeed('vocabulary-maze-word-step') % wordCount || 1;
+
+  while (getGreatestCommonDivisor(step, wordCount) !== 1) {
+    step = (step % wordCount) + 1;
+  }
+
+  return (offset + getDayNumber(date) * step) % wordCount;
+};
 
 const getWeightedNeighbors = (entry: CatalogEntry) =>
   uniqueWords([...entry.close, ...entry.contrast, ...entry.neighbors]);
@@ -358,14 +386,15 @@ const buildMaze = (
 };
 
 export const createDailyPuzzle = (date: string): DailyPuzzle => {
-  const random = createSeededRandom(date);
   const eligibleWords = catalog.filter((entry) => entry.neighbors.length >= 3);
-  const entry = pickOne(eligibleWords, random) ?? catalog[0];
+  const entry =
+    eligibleWords[getDailyWordIndex(date, eligibleWords.length)] ?? catalog[0];
 
   if (!entry) {
     throw new Error('Vocabulary catalog is empty.');
   }
 
+  const random = createSeededRandom(`${date}:${entry.word}`);
   const correctPath = walkPath(entry, random);
   const exitWords = getNearbyExitWords(entry, random);
   const exits = exitWords.map((exitWord, index) => {

@@ -1,7 +1,5 @@
 ---
 import { VocabularyMazeGame } from '@/components/vocabulary-maze';
-import { getUtcDayKey } from '@/components/vocabulary-maze/domain/date';
-import { createDailyPuzzle } from '@/components/vocabulary-maze/domain/puzzle';
 import VocabularyMazeStructuredData from '@/components/vocabulary-maze/VocabularyMazeStructuredData.astro';
 import { Navbar } from '@/partials/Navbar';
 import Base from '@/templates/Base.astro';
@@ -22,7 +20,6 @@ const keywords = [
   'pronunciation practice',
   'word association puzzle',
 ].join(', ');
-const puzzle = createDailyPuzzle(getUtcDayKey());
 ---
 
 <Base head={{ title, description, canonical, keywords, lang: 'en' }}>
@@ -31,7 +28,7 @@ const puzzle = createDailyPuzzle(getUtcDayKey());
     class="grid min-h-[calc(100vh-6rem)] place-items-center px-4 pb-16 pt-4"
     transition:name="vocabulary-maze-page"
   >
-    <VocabularyMazeGame client:load initialPuzzle={puzzle} />
+    <VocabularyMazeGame client:load />
 
     <section
       class="mx-auto mt-10 grid w-full max-w-120 gap-5 border-t border-line pt-8 text-sm leading-copy text-muted dark:border-line-dark dark:text-muted-dark"
