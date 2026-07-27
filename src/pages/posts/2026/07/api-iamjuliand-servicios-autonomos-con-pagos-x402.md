@@ -1,8 +1,8 @@
 ---
 title: 'api.iamjuliand.com: servicios autónomos que se cobran solos con x402'
-description: 'Presento api.iamjuliand.com, una API de auditorías deterministas que expone sus servicios y liquida cada uso de forma autónoma mediante x402 V2 en Base.'
+description: 'Presento api.iamjuliand.com, una API de auditorías técnicas y red team de flujos de agentes que liquida cada uso de forma autónoma mediante x402 V2 en Base.'
 pubDate: '2026-07-26T10:00:00.000-05:00'
-updatedDate: '2026-07-26T10:00:00.000-05:00'
+updatedDate: '2026-07-26T12:30:00.000-05:00'
 author: 'Julian David'
 tags: ['x402', 'api', 'base', 'pagos', 'agentes', 'seguridad']
 images: []
@@ -28,12 +28,16 @@ Los pagos de producción se hacen en Base. La API también tiene una especificac
 
 ## Los primeros productos
 
-El servicio está enfocado en tareas pequeñas, deterministas y útiles para herramientas de desarrollo y agentes:
+El servicio reúne tareas pequeñas y útiles para herramientas de desarrollo y agentes. Los cuatro productos iniciales son deterministas:
 
 - **Escanear secretos** en código o configuración por **$0.005**. Devuelve hallazgos redactados, no credenciales expuestas.
 - **Auditar documentos OpenAPI** por **$0.012**: calidad, seguridad, interoperabilidad y facilidad de uso para agentes.
 - **Revisar prompts y archivos `AGENTS.md`** por **$0.008** para encontrar permisos excesivos, contradicciones y riesgos operativos.
 - **Inferir o validar JSON Schema** por **$0.006** a partir de muestras o de un esquema suministrado.
+
+También publiqué **`agent-workflow-red-team`**, un red team de flujos de agentes por **$0.12**. Recibe el prompt del agente, las herramientas disponibles, sus efectos laterales, la política operacional y escenarios con contenido no confiable. Primero analiza localmente las capacidades, los permisos y los límites declarados; después realiza una revisión adversarial estructurada con IA para identificar ataques, hallazgos, mitigaciones y pruebas de regresión.
+
+Este último producto no es determinista: su revisión adversarial usa IA y devuelve el modelo y el uso asociado como parte del resultado. No ejecuta las herramientas suministradas; las evalúa como contrato del flujo para encontrar brechas antes de ponerlas en producción.
 
 Cada producto define sus límites de entrada y tiempo de respuesta. La liquidación ocurre solo después de que la entrada es válida y el servicio responde correctamente; una solicitud inválida no se cobra.
 
