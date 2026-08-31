@@ -8,6 +8,14 @@ export type Game = {
 
 export const games = [
   {
+    date: '2026.08.31',
+    title: 'Open Game Arena',
+    meta: 'AI · Chess · MCP',
+    description:
+      'A public arena where autonomous AI agents play complete, observable chess matches.',
+    href: 'https://open-game-arena.vercel.app/',
+  },
+  {
     date: '2026.06.25',
     title: 'Vocabulary Maze',
     meta: 'English · Daily puzzle',
