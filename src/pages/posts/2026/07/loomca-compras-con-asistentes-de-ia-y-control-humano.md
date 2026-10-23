@@ -1,49 +1,51 @@
 ---
-title: 'Loomca: compras con asistentes de IA y control humano'
-description: 'Presento Loomca, una herramienta que conecta asistentes de IA con comercios Shopify verificados para descubrir productos y preparar compras que las personas revisan y pagan directamente en el checkout del comercio.'
+title: 'Loomca: asistentes de IA con la información de tu negocio'
+description: 'Loomca permite crear asistentes de IA para responder consultas de clientes con información del negocio, PDF y páginas web, mediante un chat compartido por enlace o integrado en tu sitio.'
 pubDate: '2026-07-26T12:00:00.000-05:00'
-updatedDate: '2026-07-26T12:00:00.000-05:00'
+updatedDate: '2026-10-23T17:39:00.000-05:00'
 author: 'Julian David'
-tags: ['ia', 'comercio electrónico', 'shopify', 'asistentes de ia', 'mcp']
+tags: ['ia', 'negocios', 'atención al cliente', 'asistentes de ia']
 images: []
 ---
 
-# Loomca: compras con asistentes de IA y control humano
+[Loomca](https://loomca.com/) permite crear asistentes de IA que responden consultas de clientes con la información de un negocio. El chat se puede compartir mediante un enlace o añadir a un sitio web.
 
-Acabo de lanzar [Loomca](https://loomca.com/), una herramienta para que los asistentes de IA ayuden a encontrar productos y preparar una compra sin sacar a la persona de las decisiones importantes.
-
-La propuesta parte de una idea sencilla: un asistente puede hacer el trabajo de búsqueda y organización, pero la persona debe conservar el control sobre qué compra y cómo paga.
-
-En Loomca, el asistente encuentra productos de comercios Shopify verificados, presenta la información disponible y prepara una compra para revisión. La persona recibe un enlace de aprobación, revisa el producto y el costo proyectado, y solo después continúa al checkout existente del comercio para pagar.
+*Actualizado el 23 de octubre de 2026 para reflejar el enfoque actual del proyecto.*
 
 ## El problema
 
-Comprar con ayuda de un asistente todavía suele implicar mucho trabajo manual. Hay que buscar entre tiendas, comparar variantes, comprobar si un producto está disponible y trasladar esa información a un checkout.
+Un negocio suele tener respuestas repartidas entre su web, documentos y mensajes: horarios, servicios, requisitos o condiciones. Aun así, muchas consultas terminan en una persona que vuelve a explicar lo mismo.
 
-Un asistente de IA puede reducir parte de esa fricción, pero no debería convertirse en una caja negra que compra por su cuenta. En comercio, la claridad importa tanto como la rapidez: la persona necesita saber qué se seleccionó, cuánto podría costar y qué datos siguen pendientes de confirmar.
+Loomca busca facilitar esas respuestas. El administrador prepara la información que el asistente puede consultar y los clientes hacen sus preguntas en un chat.
 
 ## Cómo funciona
 
-El flujo de Loomca tiene tres momentos:
+El recorrido empieza con una cuenta y un asistente web. Desde el panel puedes darle un nombre, describir el negocio y preparar la información que utilizará para responder.
 
-1. **El asistente encuentra productos.** Consulta comercios Shopify activos y sus catálogos elegibles.
-2. **La persona revisa y aprueba.** Loomca crea un enlace de aprobación con el producto seleccionado, el costo proyectado y cualquier incertidumbre conocida.
-3. **El pago ocurre en Shopify.** Tras aprobar, la persona continúa al checkout propio del comercio para completar el pago.
+Puedes escribir información directamente, añadir PDF con texto o incorporar páginas web públicas concretas. Conviene usar contenido vigente y revisar las condiciones que quieres comunicar a tus clientes.
 
-Loomca no guarda los datos de la tarjeta ni reemplaza la relación entre el comprador y el comercio. Su papel es conectar la intención expresada a un asistente con un catálogo real y un proceso de compra que el usuario puede inspeccionar antes de actuar.
+Después puedes personalizar la apariencia del chat y probarlo con preguntas reales. El panel ofrece un enlace alojado en Loomca y un script para integrarlo en tu sitio web.
 
-## Diseñado para ambos lados
+Por ejemplo, un negocio de servicios puede preparar sus horarios, los requisitos de atención y sus condiciones de cancelación. El asistente consulta esa información para responder preguntas como «¿qué necesito llevar?».
 
-Para quien compra, Loomca ofrece herramientas de compra que se pueden añadir a un asistente de IA. La configuración empieza eligiendo el asistente y conectando las herramientas; después basta con iniciar una conversación y pedir ayuda para comprar.
+## Para tu negocio o los de tus clientes
 
-Para los comercios, el punto de partida es Shopify. Al conectar su tienda, Loomca verifica el catálogo y los requisitos del checkout antes de que los productos puedan aparecer en búsquedas asistidas. El comercio conserva su checkout y su operación de pago.
+Loomca está pensado tanto para quien administra su propio negocio como para quien prepara sitios y herramientas para otros. Puedes configurar asistentes separados, cada uno con su información y sus conversaciones.
 
-Esta separación es importante: Loomca facilita el descubrimiento y la preparación de la compra, mientras que Shopify sigue siendo el lugar donde se realiza el pago.
+Los Teams permiten agrupar asistentes. Esa agrupación no hace que compartan automáticamente sus fuentes: cada asistente conserva su propia configuración e información.
+
+## El control sigue en el negocio
+
+El administrador decide qué información utiliza el asistente y puede actualizar sus fuentes o pausar la atención. Mantener esas fuentes al día forma parte de preparar un chat útil.
+
+La IA puede equivocarse o no encontrar información suficiente. Las reservas, el stock, los precios finales y otros compromisos comerciales requieren confirmación del negocio.
+
+El objetivo es ayudar a responder consultas con información disponible, sin presentar una respuesta generada como una decisión comercial confirmada.
 
 ## Por qué lo construí
 
-Me interesa una forma de comercio asistido que sea útil sin pedir confianza ciega. Un asistente puede ahorrar tiempo al interpretar una necesidad, encontrar opciones y preparar una decisión. Pero preparar no es decidir.
+Me interesa reducir la distancia entre lo que un negocio ya sabe y lo que sus clientes necesitan preguntar. Un chat puede facilitar ese acceso cuando consulta información pertinente y sus límites están claros.
 
-El enlace de aprobación es el límite deliberado del producto. Convierte una recomendación o una selección hecha en una conversación en algo concreto que la persona puede revisar antes de pasar al checkout.
+Esa es la dirección actual de Loomca: asistentes que ayudan a atender consultas, con fuentes propias y control del administrador.
 
-Loomca está disponible en [loomca.com](https://loomca.com/). Si quieres comprar con un asistente de IA o conectar una tienda Shopify, allí puedes empezar.
+Puedes conocer el proyecto y empezar a preparar tu asistente en [loomca.com](https://loomca.com/).
